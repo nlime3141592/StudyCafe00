@@ -1,0 +1,14 @@
+package deu.java002_02.tprovider.gui;
+
+import javax.swing.JFrame;
+
+public class TestGui extends JFrame
+{
+	public TestGui()
+	{
+		super.setTitle("Sample GUI");
+		super.setSize(640, 480);
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setResizable(false);
+	}
+}

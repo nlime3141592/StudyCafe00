@@ -1,0 +1,89 @@
+package deu.java002_02.server;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
+import deu.java002_02.ni.INetworkService;
+
+public abstract class ClientThread implements Runnable
+{
+	private INetworkService m_netService;
+	
+	private boolean m_started;
+	private Thread m_thread;
+	private boolean m_latestReadSuccess;
+	private byte[] m_buffer;
+
+	public ClientThread(Socket _socket)
+	{
+		m_socket = _socket;
+
+		try
+		{
+			m_isr = new InputStreamReader(_socket.getInputStream());
+			m_br = new BufferedReader(m_isr);
+			m_osw = new OutputStreamWriter(_socket.getOutputStream());
+			m_bw = new BufferedWriter(m_osw);
+		}
+		catch (IOException e)
+		{
+			System.out.println("입출력 스트림 생성 실패");
+		}
+
+		m_started = false;
+		m_thread = new Thread(this);
+		m_latestReadSuccess = true;
+		m_buffer = new byte[4096]; // 4kB
+	}
+
+	protected abstract void onService(String _header, INetworkService _netService);
+
+	@Override
+	public final void run()
+	{
+		while(this.getThreadState() == ThreadState.RUNNING)
+		{
+			String header = this.readLine();
+
+			if(header == null)
+				break;
+
+			this.onService(header, this);
+		}
+	}
+
+	public void start()
+	{
+		if(!m_started)
+		{
+			m_started = true;
+			m_thread.start();
+		}
+	}
+
+	public void stop()
+	{
+		if(m_started && m_thread != null)
+		{
+			try { m_socket.close(); }
+			catch (IOException e) { e.printStackTrace(); }
+
+			m_thread = null;
+			System.out.println("클라이언트 서비스를 종료합니다.");
+		}
+	}
+
+	public final ThreadState getThreadState()
+	{
+		if(!m_started)
+			return ThreadState.READY;
+		else if(m_thread != null)
+			return ThreadState.RUNNING;
+		else
+			return ThreadState.END;
+	}
+}

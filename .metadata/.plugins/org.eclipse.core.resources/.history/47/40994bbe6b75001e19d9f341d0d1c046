@@ -1,0 +1,15 @@
+package deu.java002_02.server;
+
+public class ProviderWorkerManager extends WorkerManager
+{
+	public ProviderWorkerManager(int _threadCount, int _clientPerThread, int _threadTimeoutSecond)
+	{
+		super(_threadCount, _clientPerThread, _threadTimeoutSecond);
+	}
+
+	@Override
+	protected ServiceThread createService(int _clientPerThread, int _threadTimeoutSecond)
+	{
+		return new CustomerServiceThread(_clientPerThread, _threadTimeoutSecond);
+	}
+}

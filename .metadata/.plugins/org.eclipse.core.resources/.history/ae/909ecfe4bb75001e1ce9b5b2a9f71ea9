@@ -1,0 +1,27 @@
+package deu.java002_02.tprovider.main;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
+
+import deu.java002_02.ni.StandardNetworkModule;
+import deu.java002_02.tprovider.gui.TestGui;
+
+public class TProviderMain
+{
+	public static StandardNetworkModule netModule;
+
+	public static void main(String[] args) throws UnknownHostException, IOException
+	{
+		Socket socket = new Socket();
+		SocketAddress address = new InetSocketAddress("localhost", 28170);
+		socket.connect(address, 10 * 1000);
+
+		netModule = new StandardNetworkModule(socket);
+		netModule.writeByte(2);
+
+		new TestGui();
+	}
+}

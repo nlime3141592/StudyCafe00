@@ -1,0 +1,6 @@
+package deu.java002_02.ni;
+
+public interface IBusinessService
+{
+	void onService(INetworkModule _netService);
+}

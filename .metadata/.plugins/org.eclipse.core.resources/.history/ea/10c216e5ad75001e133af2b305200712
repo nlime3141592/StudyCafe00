@@ -1,0 +1,16 @@
+package deu.java002_02.server;
+
+
+public class CustomerWorkerManager extends WorkerManager
+{
+	public CustomerWorkerManager(int _threadCount, int _clientPerThread, int _threadTimeoutSecond)
+	{
+		super(_threadCount, _clientPerThread, _threadTimeoutSecond);
+	}
+
+	@Override
+	protected Worker createWorker(int _clientPerThread, int _threadTimeoutSecond)
+	{
+		return new CustomerWorker(_clientPerThread, _threadTimeoutSecond);
+	}
+}

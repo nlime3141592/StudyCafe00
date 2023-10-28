@@ -1,0 +1,27 @@
+package deu.java002_02.server2;
+
+import java.net.Socket;
+
+import deu.java002_02.server2.service.INetworkService;
+
+public class ProviderThread extends ClientThread
+{
+	public ProviderThread(Socket _socket)
+	{
+		super(_socket);
+	}
+
+	@Override
+	protected void onService(String _header, INetworkService _netService)
+	{
+		switch(_header)
+		{
+		case "MY_SERVICE_01":
+			IService
+			break;
+		default:
+			System.out.println("잘못된 문자열 수신함.");
+			break;
+		}
+	}
+}

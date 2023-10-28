@@ -1,0 +1,130 @@
+package deu.java002_02.server;
+
+import java.net.Socket;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public abstract class WorkerManager extends Thread
+{
+	// NOTE: 객체 생명 주기 중 변하지 않는 값입니다.
+	private int m_clientPerThread;
+	private int m_threadTimeoutSecond;
+
+	// NOTE: 객체 생명 주기 중 변할 수 있는 값입니다.
+	private boolean m_halted;
+	private int m_aliveThreadCount;
+
+	// NOTE: 객체를 구성하는 하위 자료구조입니다.
+	private Worker[] m_serviceThreads;
+	private Queue<Socket> m_clientQueue;
+
+	public WorkerManager(int _threadCount, int _clientPerThread, int _threadTimeoutSecond)
+	{
+		// NOTE: 객체 생명 주기 중 변하지 않는 값입니다.
+		m_clientPerThread = _clientPerThread;
+		m_threadTimeoutSecond = _threadTimeoutSecond;
+
+		// NOTE: 객체 생명 주기 중 변할 수 있는 값입니다.
+		m_halted = false;
+		m_aliveThreadCount = 0;
+
+		// NOTE: 객체를 구성하는 하위 자료구조입니다.
+		m_serviceThreads = new Worker[Math.max(1, _threadCount)];
+		m_clientQueue = new LinkedList<Socket>();
+	}
+	
+	protected abstract Worker createWorker(int _clientPerThread, int _threadTimeoutSecond);
+	
+	@Override
+	public void run()
+	{
+		while(!m_halted)
+		{
+			compressThread();
+
+			while(m_clientQueue.size() > 0 && distributeSocket(m_clientQueue.peek()))
+				m_clientQueue.poll();
+
+			// NOTE: 이 곳에 클라이언트의 대기열 번호가 몇 번인지 제공하는 코드를 작성할 수 있습니다.
+			// NOTE: 모니터링 알고리즘이 여기 들어올 수 있습니다.
+		}
+	}
+	
+	public void enqueueClient(Socket _socket)
+	{
+		m_clientQueue.offer(_socket);
+	}
+	
+	// NOTE: 서비스 스레드 배열을 정리합니다. 현재 생존해 있는 스레드 배열의 개수를 반환합니다.
+	private int compressThread()
+	{
+		int front = -1;
+		int rear = -1;
+
+		for(rear = 0; rear < m_serviceThreads.length; ++rear)
+		{
+			if(m_serviceThreads[rear] == null)
+				continue;
+			
+			if(m_serviceThreads[rear].isAlive())
+				m_serviceThreads[++front] = m_serviceThreads[rear];
+			else
+			{
+				--m_aliveThreadCount;
+				m_serviceThreads[rear] = null;
+			}
+		}
+
+		while(rear > front + 1)
+			m_serviceThreads[--rear] = null;
+
+		// NOTE: m_aliveThreadCount와 값이 같습니다.
+		return front + 1;
+	}
+
+	private boolean distributeSocket(Socket _socket)
+	{
+		if(_socket == null || !_socket.isConnected() || _socket.isClosed())
+			return true;
+
+		int minIndex = -1;
+		int minCount = m_clientPerThread;
+
+		// NOTE: 업무 분배 알고리즘입니다.
+		for(int i = 0; i < m_serviceThreads.length; ++i)
+		{
+			if(m_serviceThreads[i] == null)
+				continue;
+
+			if(m_serviceThreads[i].getClientCount() < minCount)
+			{
+				minIndex = i;
+				minCount = m_serviceThreads[i].getClientCount();
+			}
+		}
+
+		if(minIndex != -1)
+		{
+			// NOTE: 현존하는 Thread에 추가 업무를 분배합니다.
+			m_serviceThreads[minIndex].push(_socket);
+			System.out.println(String.format("기존 스레드 #%d에 업무 분배함.", minIndex));
+			return true;
+		}
+		else if(minIndex == -1 && m_aliveThreadCount < m_serviceThreads.length)
+		{
+			// NOTE: 현존하는 모든 Thread가 최대 업무량을 처리 중이라 새로운 Thread를 만듭니다.
+			int index = m_aliveThreadCount;
+			m_serviceThreads[index] = this.createWorker(m_clientPerThread, m_threadTimeoutSecond);
+			m_serviceThreads[index].push(_socket);
+			m_serviceThreads[index].start();
+			++m_aliveThreadCount;
+			System.out.println(String.format("새로운 스레드 #%d에 업무 분배함.", index));
+			return true;
+		}
+		else
+		{
+			// NOTE: 모든 Thread가 클라이언트를 처리 중이라 더 이상 추가할 수 없습니다.
+			return false;
+		}
+	}
+}

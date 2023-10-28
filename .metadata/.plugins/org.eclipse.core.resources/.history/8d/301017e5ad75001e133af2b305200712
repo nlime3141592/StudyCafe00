@@ -1,0 +1,31 @@
+package deu.java002_02.server;
+
+import java.net.Socket;
+
+import deu.java002_02.ni.NetworkCode;
+import deu.java002_02.server.service.HeaderParsingService;
+
+public class CustomerWorker extends Worker
+{
+	public CustomerWorker(int _clientPerThread, int _timeoutSecond)
+	{
+		super(_clientPerThread, _timeoutSecond);
+	}
+	
+	@Override
+	protected NetworkCode onServiceRoutine(Socket _socket, NetworkCode _prevNetworkCode)
+	{
+		HeaderParsingService hps = new HeaderParsingService(_socket);
+		
+		if(hps.onService() == NetworkCode.ERROR)
+			return NetworkCode.ERROR;
+		
+		switch(hps.getHeader())
+		{
+		case "MY_SERVICE_01":
+			return NetworkCode.CONNECTED;
+		default:
+			return NetworkCode.ERROR;
+		}
+	}
+}

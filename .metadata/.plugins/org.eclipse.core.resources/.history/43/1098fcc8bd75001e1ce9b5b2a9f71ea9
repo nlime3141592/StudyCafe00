@@ -1,0 +1,20 @@
+package deu.java002_02.server;
+
+import java.net.Socket;
+
+import deu.java002_02.ni.INetworkModule;
+import deu.java002_02.ni.NetworkThread;
+
+public class CustomerThread extends NetworkThread
+{
+	public CustomerThread(Socket _socket)
+	{
+		super(_socket);
+	}
+
+	@Override
+	protected void onService(String _header, INetworkModule _netModule)
+	{
+		
+	}
+}

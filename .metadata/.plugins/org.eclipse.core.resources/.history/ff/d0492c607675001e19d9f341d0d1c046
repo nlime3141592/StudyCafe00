@@ -1,0 +1,32 @@
+package deu.java002_02.server;
+
+import java.net.Socket;
+
+import deu.java002_02.ni.NetworkCode;
+import deu.java002_02.server.service.HeaderParsingService;
+import deu.java002_02.server.service.MyService01;
+
+public class ProviderWorker extends Worker
+{
+	public ProviderWorker(int _clientPerThread, int _timeoutSecond)
+	{
+		super(_clientPerThread, _timeoutSecond);
+	}
+
+	@Override
+	protected NetworkCode onServiceRoutine(Socket _socket, NetworkCode _prevNetworkCode)
+	{
+		HeaderParsingService hps = new HeaderParsingService(_socket);
+		System.out.println("서비스 루틴 실행됨");
+		if(hps.onService() == NetworkCode.ERROR)
+			return NetworkCode.ERROR;
+		
+		switch(hps.getHeader())
+		{
+		case "MY_SERVICE_01":
+			return new MyService01(_socket).onService();
+		default:
+			return NetworkCode.ERROR;
+		}
+	}
+}

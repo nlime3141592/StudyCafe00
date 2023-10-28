@@ -1,0 +1,5 @@
+package deu.java002_02.tprovider.gui.event;
+
+public class ServiceEvent01 {
+
+}

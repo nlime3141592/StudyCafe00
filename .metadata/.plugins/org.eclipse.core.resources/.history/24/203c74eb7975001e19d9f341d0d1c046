@@ -1,0 +1,142 @@
+package deu.java002_02.server;
+
+import java.io.IOException;
+import java.net.Socket;
+
+import deu.java002_02.ni.NetworkCode;
+import deu.java002_02.server.service.NetworkCodeParsingService;
+
+public abstract class Worker extends Thread
+{
+	// NOTE: 객체 생명 주기 중 변하지 않는 값입니다.
+	private int m_threadTimeoutSecond;
+
+	// NOTE: 객체 생명 주기 중 변할 수 있는 값입니다.
+	private boolean m_halted;
+	private int m_clientCount;
+	private long m_emptySocketNanoTime; // NOTE: 1초 : 1e+9
+
+	// NOTE: 객체를 구성하는 하위 자료구조입니다.
+	private Socket[] m_clients;
+
+	public Worker(int _clientPerThread, int _timeoutSecond)
+	{
+		// NOTE: 객체 생명 주기 중 변하지 않는 값입니다.
+		m_threadTimeoutSecond = Math.max(10, _timeoutSecond);
+
+		// NOTE: 객체 생명 주기 중 변할 수 있는 값입니다.
+		m_halted = false;
+		m_clientCount = 0;
+		m_emptySocketNanoTime = 0;
+
+		// NOTE: 객체를 구성하는 하위 자료구조입니다.
+		m_clients = new Socket[Math.max(1, _clientPerThread)];
+	}
+	
+	protected abstract NetworkCode onServiceRoutine(Socket _socket, NetworkCode _prevNetworkCode);
+
+	@Override
+	public void run()
+	{
+		while(!m_halted && m_emptySocketNanoTime < 1e+9 * (long)m_threadTimeoutSecond)
+		{
+			long baseNanoTime = System.nanoTime();
+			int index = 0;
+			long serviceTime = 10;
+			long leftServiceTime = serviceTime;
+
+			while(index < m_clients.length)
+			{
+				long baseServiceTime = System.nanoTime();
+
+				if(m_clients[index] == null)
+				{
+					++index;
+					leftServiceTime = serviceTime;
+					continue;
+				}
+
+				else if(!m_clients[index].isClosed())
+				{
+					try { m_clients[index].close(); }
+					catch (IOException e) { e.printStackTrace(); }
+					m_clients[index] = null;
+					--m_clientCount;
+					++index;
+					continue;
+				}
+
+				NetworkCode handleResult = NetworkCode.DISCONNECTED;
+
+				try { handleResult = handleService(index, leftServiceTime); }
+				catch (IOException e) { e.printStackTrace(); }
+
+				if(handleResult == NetworkCode.ERROR)
+					leftServiceTime -= System.nanoTime() - baseServiceTime;
+				else
+				{
+					++index;
+					leftServiceTime = serviceTime;
+				}
+			}
+/*
+			try { Thread.sleep(1); }
+			catch (InterruptedException e) { e.printStackTrace(); }
+*/
+			m_emptySocketNanoTime += System.nanoTime() - baseNanoTime;
+		}
+	}
+	
+	public int getClientCount()
+	{
+		return m_clientCount;
+	}
+	
+	public int getClientPerThread()
+	{
+		return m_clients.length;
+	}
+	
+	public void push(Socket _socket)
+	{
+		int i = 0;
+
+		for(i = 0; i < m_clients.length; ++i)
+			if(m_clients[i] == null)
+				break;
+
+		++m_clientCount;
+		m_clients[i] = _socket;
+	}
+
+	private NetworkCode handleService(int _clientIndex, long _leftServiceTime) throws IOException
+	{
+		NetworkCodeParsingService ncps = new NetworkCodeParsingService(m_clients[_clientIndex]);
+		NetworkCode code = ncps.onService();
+
+		switch(code)
+		{
+		case DISCONNECTED:
+			m_clients[_clientIndex].close();
+			m_clients[_clientIndex] = null;
+			--m_clientCount;
+			return code;
+		case CONNECTED:
+			// NOTE: 해당 클라이언트는 대기상태입니다.
+			return code;
+		case SERVICE_ROUTINE:
+			return onServiceRoutine(m_clients[_clientIndex], code);
+		case ERROR:
+			if(_leftServiceTime > 0)
+				return code;
+			else
+				return NetworkCode.DISCONNECTED;
+		default:
+			System.out.println("절대 출력되면 안되는 문장입니다. 오류를 해결하세요.");
+			if(_leftServiceTime > 0)
+				return NetworkCode.ERROR;
+			else
+				return NetworkCode.DISCONNECTED;
+		}
+	}
+}

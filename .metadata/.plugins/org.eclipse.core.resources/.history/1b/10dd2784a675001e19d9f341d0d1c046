@@ -1,0 +1,20 @@
+package deu.java002_02.server2;
+
+import java.net.Socket;
+
+public class CustomerThread extends ClientThread
+{
+	public CustomerThread(Socket _socket)
+	{
+		super(_socket);
+	}
+
+	@Override
+	public void run()
+	{
+		while(super.getThreadState() == ThreadState.RUNNING)
+		{
+			String header = super.readLine()
+		}
+	}
+}

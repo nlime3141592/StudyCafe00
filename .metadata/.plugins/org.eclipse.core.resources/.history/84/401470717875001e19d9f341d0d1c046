@@ -1,0 +1,31 @@
+package deu.java002_02.server.service;
+
+import java.net.Socket;
+
+import deu.java002_02.ni.NetworkCode;
+import deu.java002_02.ni.NetworkService;
+
+public class MyService01 extends NetworkService
+{
+	public MyService01(Socket _socket)
+	{
+		super(_socket);
+	}
+
+	@Override
+	public NetworkCode onService()
+	{
+		String id = super.readLine();
+		String pw = super.readLine();
+		String nk = super.readLine();
+System.out.println("hi?");
+		System.out.println(String.format("id: %s", id));
+		System.out.println(String.format("pw: %s", pw));
+		System.out.println(String.format("nk: %s", nk));
+
+		super.writeLine("Server successfully received.");
+		super.writeEnd();
+
+		return NetworkCode.SERVICE_ROUTINE;
+	}
+}

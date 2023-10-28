@@ -1,0 +1,6 @@
+package deu.java002_02.server2;
+
+public enum ThreadState
+{
+
+}

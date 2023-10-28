@@ -1,0 +1,6 @@
+INDEX VERSION 1.131+C:\Programming\Java\StudyCafe\.metadata\.plugins\org.eclipse.jdt.core
+4158840916.index
+3630319042.index
+1865797976.index
+1008464352.index
+658277221.index

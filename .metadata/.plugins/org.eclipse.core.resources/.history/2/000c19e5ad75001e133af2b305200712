@@ -1,0 +1,32 @@
+package deu.java002_02.server;
+
+import java.net.ServerSocket;
+
+public class AcceptThread extends Thread
+{
+	private boolean m_halted;
+	private Server m_server;
+	private ServerSocket m_serverSocket;
+
+	public AcceptThread(Server _server, ServerSocket _serverSocket)
+	{
+		m_halted = false;
+		m_server = _server;
+		m_serverSocket = _serverSocket;
+	}
+
+	protected boolean isHalted()
+	{
+		return m_halted;
+	}
+
+	protected Server getServer()
+	{
+		return m_server;
+	}
+
+	protected ServerSocket getServerSocket()
+	{
+		return m_serverSocket;
+	}
+}

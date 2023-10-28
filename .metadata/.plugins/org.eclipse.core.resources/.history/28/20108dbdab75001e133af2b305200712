@@ -1,0 +1,27 @@
+package deu.java002_02.server2;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.net.Socket;
+
+public class ProviderThread extends ClientThread
+{
+	public ProviderThread(Socket _socket)
+	{
+		super(_socket);
+	}
+
+	@Override
+	protected void onService(String _header, BufferedReader _reader, BufferedWriter _writer)
+	{
+		switch(_header)
+		{
+		case "MY_SERVICE_01":
+			new 
+			break;
+		default:
+			System.out.println("잘못된 문자열 수신함.");
+			break;
+		}
+	}
+}

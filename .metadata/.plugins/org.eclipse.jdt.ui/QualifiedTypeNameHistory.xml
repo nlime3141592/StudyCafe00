@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server.service.HeaderParsingService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server.service.MyService01"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkCode"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="java.net.ServerSocket"/>
+    <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
+    <fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
+    <fullyQualifiedTypeName name="java.io.OutputStreamWriter"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.net.SocketException"/>
+    <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server2.service.INetworkService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server2.service.IBusinessService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server2.service.MyService01"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.StandardNetworkService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.IBusinessService"/>
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server.service.FileMonitorService"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JButton"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.StandardNetworkModule"/>
+    <fullyQualifiedTypeName name="java.net.Socket"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.event.ServiceEvent01"/>
+    <fullyQualifiedTypeName name="deu.java002_02.tprovider.main.TProviderMain"/>
+    <fullyQualifiedTypeName name="deu.java002_02.tprovider.service.TService01"/>
+    <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.TestGui"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="java.awt.Font"/>
+    <fullyQualifiedTypeName name="java.nio.file.Paths"/>
+    <fullyQualifiedTypeName name="java.net.SocketAddress"/>
+    <fullyQualifiedTypeName name="java.net.InetSocketAddress"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkThread"/>
+    <fullyQualifiedTypeName name="java.util.Queue"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,82 @@
+package deu.java002_02.ni;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
+public final class StandardNetworkService implements INetworkService
+{
+	private Socket m_socket;
+	
+	private InputStreamReader m_isr;
+	private BufferedReader m_br;
+
+	private OutputStreamWriter m_osw;
+	private BufferedWriter m_bw;
+	
+	public StandardNetworkService(Socket _socket)
+	{
+		m_socket = _socket;
+
+		try
+		{
+			m_isr = new InputStreamReader(_socket.getInputStream());
+			m_br = new BufferedReader(m_isr);
+			m_osw = new OutputStreamWriter(_socket.getOutputStream());
+			m_bw = new BufferedWriter(m_osw);
+		}
+		catch (IOException e)
+		{
+			System.out.println("입출력 스트림 생성 실패");
+		}
+	}
+	
+	public final void stop()
+	{
+		try
+		{
+			m_bw.close();
+			m_osw.close();
+			m_br.close();
+			m_isr.close();
+			m_socket.close();
+		}
+		catch (IOException e)
+		{
+			
+		}
+	}
+
+	@Override
+	public final String readLine()
+	{
+		try
+		{
+			return m_br.readLine();
+		}
+		catch (IOException e)
+		{
+			this.stop();
+			System.out.println("사용자로부터 입력을 받을 수 없습니다.");
+			return null;
+		}
+	}
+
+	@Override
+	public final void writeLine(String _message)
+	{
+		try
+		{
+			m_bw.write(_message + "\n");
+			m_bw.flush();
+		}
+		catch (IOException e)
+		{
+			this.stop();
+			System.out.println("사용자에게 값을 제공할 수 없어 스레드를 강제로 종료합니다.");
+		}
+	}
+}

@@ -1,0 +1,28 @@
+package deu.java002_02.server.service;
+
+import java.net.Socket;
+
+import deu.java002_02.ni.NetworkCode;
+import deu.java002_02.ni.NetworkService;
+
+public class HeaderParsingService extends NetworkService
+{
+	private String m_header;
+
+	public HeaderParsingService(Socket _socket)
+	{
+		super(_socket);
+		
+		m_header = null;
+	}
+
+	@Override
+	public NetworkCode onService()
+	{
+		if(m_header == null)
+			return NetworkCode.ERROR;
+		
+		m_header = super.readLine();
+	}
+
+}
