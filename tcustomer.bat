@@ -1,4 +1,4 @@
 @echo on
-cd .\TestProvider\bin && java -classpath .;..\..\NetworkInterface\bin deu.java002_02.tprovider.main.TProviderMain
+cd .\TestProvider\bin && java -classpath .;..\..\NetworkInterface\bin;..\..\StudySystem\bin deu.java002_02.study.tprovider.main.TProviderMain
 
 pause

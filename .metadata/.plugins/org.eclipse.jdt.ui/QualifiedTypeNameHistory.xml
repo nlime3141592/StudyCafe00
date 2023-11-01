@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.server.service.HeaderParsingService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.server.service.MyService01"/>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkCode"/>
-    <fullyQualifiedTypeName name="java.io.IOException"/>
-    <fullyQualifiedTypeName name="java.net.ServerSocket"/>
     <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
     <fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
     <fullyQualifiedTypeName name="java.io.OutputStreamWriter"/>
@@ -24,7 +18,6 @@
     <fullyQualifiedTypeName name="deu.java002_02.server.service.FileMonitorService"/>
     <fullyQualifiedTypeName name="javax.swing.JFrame"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.StandardNetworkModule"/>
     <fullyQualifiedTypeName name="java.net.Socket"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
@@ -37,8 +30,34 @@
     <fullyQualifiedTypeName name="java.nio.file.Paths"/>
     <fullyQualifiedTypeName name="java.net.SocketAddress"/>
     <fullyQualifiedTypeName name="java.net.InetSocketAddress"/>
+    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="deu.java002_02.db.DB"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="deu.java002_02.server.service.MyData01"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.event.ServiceEvent02"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkThread"/>
     <fullyQualifiedTypeName name="java.util.Queue"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.INetworkService"/>
-    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkLiteral"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.main.IService"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentLinkedQueue"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.StandardConnectionModule"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.main.StudyThread"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.StandardNetworkModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReadServerTimeService"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArraySet"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.tprovider.main.TProviderMain"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.tprovider.service.TService03"/>
+    <fullyQualifiedTypeName name="java.awt.Insets"/>
 </qualifiedTypeNameHistroy>
