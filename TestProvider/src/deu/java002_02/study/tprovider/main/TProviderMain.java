@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.time.*;
 
-import deu.java002_02.study.ni.StandardNetworkModule;
+import deu.java002_02.study.ni.NetworkModule;
 import deu.java002_02.study.tprovider.gui.TestGui;
 
 public class TProviderMain
@@ -22,7 +22,7 @@ public class TProviderMain
 		{
 			socket.connect(address, 10 * 1000);
 
-			thread = new TProviderThread(new StandardNetworkModule(socket));
+			thread = new TProviderThread(new NetworkModule(socket));
 			thread.start();
 
 			new TestGui();

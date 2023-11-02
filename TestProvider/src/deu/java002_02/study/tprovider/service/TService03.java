@@ -1,5 +1,7 @@
 package deu.java002_02.study.tprovider.service;
 
+import java.io.IOException;
+
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.tprovider.gui.TestGui;
@@ -16,10 +18,11 @@ public class TService03 implements INetworkService
 	}
 
 	@Override
-	public void onService()
+	public boolean tryExecuteService()
 	{
 		m_netModule.writeLine("READ_SERVER_TIME_SERVICE");
 		m_gui.getLabel2().setText(m_netModule.readLine());
+		return true;
 	}
 
 	@Override

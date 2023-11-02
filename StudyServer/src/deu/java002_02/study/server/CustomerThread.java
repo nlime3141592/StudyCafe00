@@ -1,6 +1,8 @@
 package deu.java002_02.study.server;
 
+import deu.java002_02.study.main.IService;
 import deu.java002_02.study.main.StudyThread;
+import deu.java002_02.study.main.ThreadState;
 import deu.java002_02.study.ni.INetworkModule;
 
 public class CustomerThread extends StudyThread
@@ -13,35 +15,58 @@ public class CustomerThread extends StudyThread
 		
 		m_netModule = _netModule; 
 	}
+	
+	@Override
+	public void start()
+	{
+		if(super.getThreadState() != ThreadState.READY)
+			return;
+
+		super.start();
+
+		System.out.println("CustomerThread: new Customer entered.");
+	}
+
+	@Override
+	public void stop()
+	{
+		if(super.getThreadState() != ThreadState.RUNNING)
+			return;
+
+		System.out.println("CustomerThread: a Customer exited.");
+		super.stop();
+	}
 
 	@Override
 	public void run()
 	{
-		System.out.println("CustomerThread: new Customer entered.");
-
-		while(super.isRun())
+		while(super.isRun() && !m_netModule.isClosed())
 		{
-			String header = this.getNetworkModule().readLine();
+			String header = m_netModule.readLine();
 
-			if(header == null)
+			if(header != null)
 			{
-				super.stop();
-				return;
-			}
-
-			switch(header)
-			{
-			default:
-				System.out.println("CustomerThread: Invalid header requested.");
-				break;
+				IService service = switchService(header);
+				
+				if(service != null)
+					service.tryExecuteService();
 			}
 		}
-		
-		System.out.println("CustomerThread: a Customer exited.");
+
+		this.stop();
 	}
 
 	protected INetworkModule getNetworkModule()
 	{
 		return m_netModule;
+	}
+
+	private IService switchService(String _header)
+	{
+		switch(_header)
+		{
+		default:
+			return null;
+		}
 	}
 }

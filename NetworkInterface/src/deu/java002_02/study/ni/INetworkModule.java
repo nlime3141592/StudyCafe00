@@ -2,9 +2,10 @@ package deu.java002_02.study.ni;
 
 public interface INetworkModule
 {
+	boolean isClosed();
+
 	String readLine();
 	int readByte();
-
-	boolean writeLine(String _message);
-	boolean writeByte(int _byte);
+	void writeLine(String _line);
+	void writeByte(int _byte);
 }

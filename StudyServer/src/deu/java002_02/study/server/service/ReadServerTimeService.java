@@ -8,12 +8,13 @@ import deu.java002_02.study.ni.INetworkService;
 public class ReadServerTimeService extends Service implements INetworkService
 {
 	private INetworkModule m_netModule;
-
+	
 	@Override
-	public void onService()
+	public boolean tryExecuteService()
 	{
 		String localDateTime = LocalDateTime.now().toString();
 		m_netModule.writeLine(localDateTime);
+		return true;
 	}
 
 	@Override

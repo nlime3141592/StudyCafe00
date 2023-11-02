@@ -1,20 +1,17 @@
 package deu.java002_02.study.server.service;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import deu.java002_02.study.db.main.DB;
-import deu.java002_02.study.ni.IConnectionModule;
+import deu.java002_02.study.ni.ConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
-import deu.java002_02.study.ni.NetworkLiteral;
 
 public final class ReadUserDataService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
-	private IConnectionModule m_conModule;
+	private ConnectionModule m_conModule;
 
 	@Override
 	public void bindNetworkModule(INetworkModule _netModule)
@@ -23,45 +20,40 @@ public final class ReadUserDataService extends Service implements INetworkServic
 	}
 
 	@Override
-	public void bindConnectionModule(IConnectionModule _conModule)
+	public void bindConnectionModule(ConnectionModule _conModule)
 	{
 		m_conModule = _conModule;
 	}
 
 	@Override
-	public void onService()
+	public boolean tryExecuteService()
 	{
-		long timeout = (long)(1e+9 * 3);
+		long beginTime = System.nanoTime();
+		long leftAvailableTime = (long)1e+9;
+		
+		while(m_conModule == null && leftAvailableTime > 0)
+			leftAvailableTime -= (System.nanoTime() - beginTime);
 
-		while(m_conModule == null && timeout > 0)
-			timeout -= System.nanoTime();
-
-		if(timeout <= 0)
+		if(leftAvailableTime <= 0)
 		{
 			m_conModule = null;
-			System.out.println("3초 안에 응답이 없음.");
-			return;
+			System.out.println("ReadUserDataService: Cannot access DB.");
+			return false;
 		}
-
-		String sql = "select * from users where serverid = ?";
-
-		// NOTE: SQL 문장에 서식 문자 등 후처리가 필요하다면 PreparedStatement 객체를 사용할 수 있습니다.
-		PreparedStatement state = m_conModule.getPreparedState(sql);
 
 		try
 		{
-			// NOTE: PreparedStatement의 인덱스는 1번부터 시작합니다.
-			state.setString(1, m_netModule.readLine());
-System.out.println("ruds 1");
-			ResultSet result = state.executeQuery();
-			System.out.println("ruds 2");
-			if(!result.next())
+			String sql = "select * from users where serverid = ?";
+
+			ResultSet result = m_conModule.executeQuery(sql, 1);
+
+			if(result == null || !result.next())
 			{
 				System.out.println("ReadUserDataService: Cannot response to client.");
 				m_conModule = null;
-				return;
+				return false;
 			}
-			System.out.println("ruds 3");
+
 			// NOTE: ResultSet의 인덱스는 1번부터 시작합니다.
 			String uuid = result.getString(1);
 			String nk = result.getString(2);
@@ -69,7 +61,7 @@ System.out.println("ruds 1");
 			String pw = result.getString(4);
 			String reg = result.getString(5);
 			String bl = result.getString(6);
-			System.out.println("ruds 4");
+
 			m_netModule.writeLine(uuid);
 			m_netModule.writeLine(nk);
 			m_netModule.writeLine(id);
@@ -80,10 +72,12 @@ System.out.println("ruds 1");
 
 			System.out.println(m_netModule.readLine());
 			System.out.println("ReadUserDataService: OK");
+			return true;
 		}
 		catch (SQLException e)
 		{
 			System.out.println("ReadUserDataService: Occured sql exception.");
+			return false;
 		}
 		finally
 		{

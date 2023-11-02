@@ -55,35 +55,34 @@ public class TProviderThread extends StudyThread
 
 		while(super.isRun())
 		{
+			long beginTime = System.nanoTime();
+
 			while(m_serviceEventQueue.size() > 0)
 				executeService(m_serviceEventQueue.poll());
 
 			if(fixedServiceTime > 0)
-				fixedServiceTime -= System.nanoTime();
+				fixedServiceTime -= (System.nanoTime() - beginTime);
 			else
 			{
 				fixedServiceTime += (long)(1e+6 * TProviderThread.c_FIXED_SERVICE_TIME);
 
 				// NOTE: 실시간으로 처리할 서비스입니다.
 				for(INetworkService service : m_updatingServices)
-					service.onService();
+					service.tryExecuteService();
 			}
 		}
 	}
-	
+
 	@Override
-	public boolean start()
+	public void start()
 	{
-		if(!super.start())
-			return false;
-		
+		super.start();
 		m_netModule.writeByte(2);
-		return true;
 	}
 
 	private void executeService(INetworkService _service)
 	{
 		_service.bindNetworkModule(m_netModule);
-		_service.onService();
+		_service.tryExecuteService();
 	}
 }

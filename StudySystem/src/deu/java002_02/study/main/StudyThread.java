@@ -4,7 +4,7 @@ public abstract class StudyThread implements Runnable
 {
 	private boolean m_started;
 	private Thread m_thread;
-	
+
 	public StudyThread()
 	{
 		m_started = false;
@@ -14,23 +14,21 @@ public abstract class StudyThread implements Runnable
 	@Override
 	public abstract void run();
 
-	public boolean start()
+	public void start()
 	{
-		if(m_started)
-			return false;
+		if(this.getThreadState() != ThreadState.READY)
+			return;
 
 		m_started = true;
 		m_thread.start();
-		return true;
 	}
 
-	public boolean stop()
+	public void stop()
 	{
-		if(!m_started || m_thread == null)
-			return false;
+		if(this.getThreadState() != ThreadState.RUNNING)
+			return;
 
 		m_thread = null;
-		return false;
 	}
 
 	public final boolean isRun()

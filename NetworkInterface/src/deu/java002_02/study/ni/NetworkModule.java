@@ -1,4 +1,4 @@
-package deu.java002_02.ni;
+package deu.java002_02.study.ni;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,19 +7,21 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public final class StandardNetworkModule implements INetworkModule
+public final class NetworkModule implements INetworkModule
 {
 	private Socket m_socket;
-	
+	private boolean m_isClosed;
+
 	private InputStreamReader m_isr;
 	private BufferedReader m_br;
 
 	private OutputStreamWriter m_osw;
 	private BufferedWriter m_bw;
 
-	public StandardNetworkModule(Socket _socket)
+	public NetworkModule(Socket _socket)
 	{
 		m_socket = _socket;
+		m_isClosed = _socket.isClosed();
 
 		try
 		{
@@ -30,10 +32,15 @@ public final class StandardNetworkModule implements INetworkModule
 		}
 		catch (IOException e)
 		{
-			System.out.println("입출력 스트림 생성에 실패했습니다.");
+			m_isClosed = true;
 		}
 	}
-	
+
+	public final boolean isClosed()
+	{
+		return m_isClosed;
+	}
+
 	public final void stop()
 	{
 		try
@@ -43,69 +50,87 @@ public final class StandardNetworkModule implements INetworkModule
 			m_br.close();
 			m_isr.close();
 			m_socket.close();
+			m_isClosed = true;
 		}
 		catch (IOException e)
 		{
-			
+			m_isClosed = true;
 		}
 	}
 
-	@Override
 	public final String readLine()
 	{
+		if(m_isClosed)
+			return null;
+
 		try
 		{
-			return m_br.readLine();
+			String line = m_br.readLine();
+			
+			if(line != null)
+				return line;
+			
+			m_isClosed = true;
+			return null;
 		}
 		catch (IOException e)
 		{
-			this.stop();
-			System.out.println("StandardNetworkModule.readLine() : 네트워크로부터 입력받을 수 없습니다.");
+			m_isClosed = true;
 			return null;
 		}
 	}
 
-	@Override
-	public final boolean writeLine(String _message)
+	public final int readByte()
 	{
+		if(m_isClosed)
+			return -1;
+
 		try
 		{
-			m_bw.write(_message + "\n");
+			int value = m_socket.getInputStream().read();
+			
+			if(value != -1)
+				return value;
+			
+			m_isClosed = true;
+			return -1;
+		}
+		catch (IOException e)
+		{
+			m_isClosed = true;
+			return -1;
+		} 
+	}
+
+	public final void writeLine(String _line)
+	{
+		if(m_isClosed)
+			return;
+
+		try
+		{
+			m_bw.write(_line + "\n");
 			m_bw.flush();
 		}
 		catch (IOException e)
 		{
-			this.stop();
-			System.out.println("StandardNetworkModule.writeLine() : 네트워크에 값을 쓸 수 없습니다.");
+			m_isClosed = true;
 		}
 	}
 
-	@Override
-	public int readByte()
+	public final void writeByte(int _byte)
 	{
-		try
-		{
-			return m_socket.getInputStream().read();
-		}
-		catch (IOException e)
-		{
-			this.stop();
-			System.out.println("StandardNetworkModule.readByte() : 네트워크로부터 입력받을 수 없습니다.");
-			return -1;
-		}
-	}
+		if(m_isClosed)
+			return;
 
-	@Override
-	public void writeByte(int _byte)
-	{
 		try
 		{
 			m_socket.getOutputStream().write(_byte);
+			m_socket.getOutputStream().flush();
 		}
 		catch (IOException e)
 		{
-			this.stop();
-			System.out.println("StandardNetworkModule.writeByte() : 네트워크에 값을 쓸 수 없습니다.");
+			m_isClosed = true;
 		}
 	}
 }

@@ -1,8 +1,9 @@
 package deu.java002_02.study.ni;
 
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public interface IConnectionModule
 {
-	PreparedStatement getPreparedState(String _sql);
+	ResultSet executeQuery(String _sqlFormat, Object... _parameters);
+	int executeUpdate(String _sqlFormat, Object... _parameters);
 }

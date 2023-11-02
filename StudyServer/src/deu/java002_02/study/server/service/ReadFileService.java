@@ -25,55 +25,42 @@ public final class ReadFileService extends Service implements INetworkService
 		m_netModule = _netModule;
 	}
 
-	public void onService()
+	@Override
+	public boolean tryExecuteService()
 	{
-		if(m_netModule == null)
-			return;
-
 		try
 		{
 			FileInputStream input = new FileInputStream(m_path);
 			InputStreamReader isr = new InputStreamReader(input);
 			BufferedReader br = new BufferedReader(isr);
 
-			try
+			while(true)
 			{
-				while(true)
-				{
-					String line = br.readLine();
+				String line = br.readLine();
 
-					if(line == null)
-					{
-						m_netModule.writeLine(NetworkLiteral.EOF);
-						break;
-					}
-					else
-					{
-						m_netModule.writeLine(line);
-					}
-				}
+				if(line == null)
+					break;
+				else
+					m_netModule.writeLine(line);
 			}
-			catch (IOException e)
-			{
-				m_netModule.writeLine(NetworkLiteral.EOF);
-	
-				// NOTE: End of File
-				try
-				{
-					br.close();
-					isr.close();
-					input.close();
-				}
-				catch (IOException e1)
-				{
-					
-				}
-			}
+
+			br.close();
+			isr.close();
+			input.close();
+
+			return true;
 		}
-		catch (FileNotFoundException e)
+		catch(FileNotFoundException _fnfEx)
+		{
+			return false;
+		}
+		catch (IOException _ioEx)
+		{
+			return false;
+		}
+		finally
 		{
 			m_netModule.writeLine(NetworkLiteral.EOF);
-			System.out.println(String.format("파일을 찾을 수 없습니다."));
 		}
 	}
 }

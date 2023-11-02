@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import deu.java002_02.study.main.StudyThread;
 import deu.java002_02.study.ni.IConnectionService;
-import deu.java002_02.study.ni.StandardConnectionModule;
+import deu.java002_02.study.ni.ConnectionModule;
 
 public class DB extends StudyThread
 {
@@ -17,7 +17,7 @@ public class DB extends StudyThread
 	private static final String c_ROOT_ID = "root";
 	private static final String c_ROOT_PW = "1234";
 
-	private StandardConnectionModule m_conModule;
+	private ConnectionModule m_conModule;
 	private ConcurrentLinkedQueue<IConnectionService> m_conQueue;
 
 	public DB()
@@ -33,22 +33,22 @@ public class DB extends StudyThread
 			while(m_conQueue.size() > 0)
 			{
 				// NOTE: 3초의 작업 시간을 줍니다. 만약 3초 안에 작업을 끝내지 못했다면, DB Connection이 강제로 종료됩니다.
+				long beginTime = System.nanoTime();
 				long timeout = (long)(1e+9 * 3);
 
 				m_conQueue.peek().bindConnectionModule(m_conModule);
 
 				while(!m_conQueue.peek().isConnectionEnded() && timeout > 0)
-					timeout -= System.nanoTime();
+					timeout -= (System.nanoTime() - beginTime);
 
 				m_conQueue.poll().bindConnectionModule(null);
 			}
 		}
 	}
 
-	public boolean start()
+	public void start()
 	{
-		if(!super.start())
-			return false;
+		super.start();
 
 		String dbUrl = String.format("jdbc:mariadb://%s:%d/%s",
 				c_HOST,
@@ -59,23 +59,21 @@ public class DB extends StudyThread
 		try
 		{
 			Connection dbConnection = DriverManager.getConnection(dbUrl, c_ROOT_ID, c_ROOT_PW);
-			m_conModule = new StandardConnectionModule(dbConnection);
+			m_conModule = new ConnectionModule(dbConnection);
 
 			System.out.println("(DB=" + dbUrl + ")에 접속했습니다.");
-			return true;
 		}
 		catch(SQLException _sqlEx)
 		{
 			// _sqlEx.printStackTrace();
 			System.out.println("(DB=" + dbUrl + ")에 접속할 수 없습니다.");
-			return false;
 		}
 	}
 
-	public boolean stop()
+	public void stop()
 	{
 		m_conModule.stop();
-		return super.stop();
+		super.stop();
 	}
 
 	public void requestService(IConnectionService _service)

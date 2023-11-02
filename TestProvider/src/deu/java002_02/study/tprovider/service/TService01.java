@@ -22,7 +22,7 @@ public class TService01 implements INetworkService
 	}
 
 	@Override
-	public void onService()
+	public boolean tryExecuteService()
 	{
 		m_netModule.writeLine("READ_FILE_SERVICE_TEST");
 
@@ -33,7 +33,7 @@ public class TService01 implements INetworkService
 			String line = m_netModule.readLine();
 
 			if(line == null || line.equals("<EOF>"))
-				break;
+				return true;
 
 			m_gui.getLabel1().setText(m_gui.getLabel1().getText() + "[" + line + "]");
 		}

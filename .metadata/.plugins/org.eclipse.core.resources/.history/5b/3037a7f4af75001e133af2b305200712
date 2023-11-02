@@ -1,9 +1,0 @@
-package deu.java002_02.server;
-
-public class ServerMain
-{
-	public static void main(String[] args)
-	{
-		
-	}
-}
