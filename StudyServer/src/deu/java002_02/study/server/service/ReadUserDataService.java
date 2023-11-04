@@ -3,7 +3,7 @@ package deu.java002_02.study.server.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import deu.java002_02.study.ni.ConnectionModule;
+import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
@@ -11,7 +11,7 @@ import deu.java002_02.study.ni.INetworkService;
 public final class ReadUserDataService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
-	private ConnectionModule m_conModule;
+	private IConnectionModule m_conModule;
 
 	@Override
 	public void bindNetworkModule(INetworkModule _netModule)
@@ -20,7 +20,7 @@ public final class ReadUserDataService extends Service implements INetworkServic
 	}
 
 	@Override
-	public void bindConnectionModule(ConnectionModule _conModule)
+	public void bindConnectionModule(IConnectionModule _conModule)
 	{
 		m_conModule = _conModule;
 	}
@@ -28,15 +28,14 @@ public final class ReadUserDataService extends Service implements INetworkServic
 	@Override
 	public boolean tryExecuteService()
 	{
-		long beginTime = System.nanoTime();
-		long leftAvailableTime = (long)1e+9;
-		
-		while(m_conModule == null && leftAvailableTime > 0)
-			leftAvailableTime -= (System.nanoTime() - beginTime);
+		long nowTime = System.nanoTime();
+		long endTime = nowTime + (long)(1e+9 * 1);
 
-		if(leftAvailableTime <= 0)
+		while(m_conModule == null && nowTime < endTime)
+			nowTime = System.nanoTime();
+
+		if(nowTime >= endTime)
 		{
-			m_conModule = null;
 			System.out.println("ReadUserDataService: Cannot access DB.");
 			return false;
 		}
@@ -50,7 +49,6 @@ public final class ReadUserDataService extends Service implements INetworkServic
 			if(result == null || !result.next())
 			{
 				System.out.println("ReadUserDataService: Cannot response to client.");
-				m_conModule = null;
 				return false;
 			}
 

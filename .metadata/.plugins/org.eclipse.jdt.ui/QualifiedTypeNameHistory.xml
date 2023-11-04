@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.StandardNetworkService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.IBusinessService"/>
-    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.io.BufferedReader"/>
     <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
     <fullyQualifiedTypeName name="deu.java002_02.server.service.FileMonitorService"/>
-    <fullyQualifiedTypeName name="javax.swing.JButton"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.StandardNetworkModule"/>
     <fullyQualifiedTypeName name="java.net.Socket"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.event.ServiceEvent01"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.main.TProviderMain"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.service.TService01"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.TestGui"/>
-    <fullyQualifiedTypeName name="java.awt.Font"/>
     <fullyQualifiedTypeName name="java.nio.file.Paths"/>
     <fullyQualifiedTypeName name="java.net.SocketAddress"/>
     <fullyQualifiedTypeName name="java.net.InetSocketAddress"/>
@@ -23,7 +17,6 @@
     <fullyQualifiedTypeName name="deu.java002_02.db.DB"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="deu.java002_02.server.service.MyData01"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.event.ServiceEvent02"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkThread"/>
     <fullyQualifiedTypeName name="java.util.Queue"/>
@@ -46,10 +39,7 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.tprovider.service.TService03"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.StudyThread"/>
     <fullyQualifiedTypeName name="java.net.ServerSocket"/>
-    <fullyQualifiedTypeName name="java.awt.Insets"/>
-    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
-    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
     <fullyQualifiedTypeName name="java.awt.event.WindowListener"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.ServerMain"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.command.MonitorCommand"/>
@@ -60,4 +50,14 @@
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.ThreadState"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="java.awt.Font"/>
+    <fullyQualifiedTypeName name="javax.swing.JButton"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatButton"/>
+    <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
+    <fullyQualifiedTypeName name="java.awt.Insets"/>
+    <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
 </qualifiedTypeNameHistroy>

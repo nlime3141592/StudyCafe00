@@ -13,7 +13,7 @@ public class DB extends StudyThread
 {
 	private static final String c_HOST = "localhost";
 	private static final int c_PORT = 3306;
-	private static final String c_DB_NAME = "testbase";
+	private static final String c_DB_NAME = "studycafe";
 	private static final String c_ROOT_ID = "root";
 	private static final String c_ROOT_PW = "1234";
 
@@ -33,13 +33,13 @@ public class DB extends StudyThread
 			while(m_conQueue.size() > 0)
 			{
 				// NOTE: 3초의 작업 시간을 줍니다. 만약 3초 안에 작업을 끝내지 못했다면, DB Connection이 강제로 종료됩니다.
-				long beginTime = System.nanoTime();
-				long timeout = (long)(1e+9 * 3);
+				long nowTime = System.nanoTime();
+				long endTime = nowTime + (long)(1e+9 * 3);
 
 				m_conQueue.peek().bindConnectionModule(m_conModule);
 
-				while(!m_conQueue.peek().isConnectionEnded() && timeout > 0)
-					timeout -= (System.nanoTime() - beginTime);
+				while(!m_conQueue.peek().isConnectionEnded() && nowTime < endTime)
+					nowTime = System.nanoTime();
 
 				m_conQueue.poll().bindConnectionModule(null);
 			}

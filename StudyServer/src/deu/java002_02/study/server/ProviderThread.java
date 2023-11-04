@@ -3,8 +3,11 @@ package deu.java002_02.study.server;
 import deu.java002_02.study.main.IService;
 import deu.java002_02.study.main.StudyThread;
 import deu.java002_02.study.main.ThreadState;
+import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
+import deu.java002_02.study.server.service.JoinService;
+import deu.java002_02.study.server.service.LoginService;
 import deu.java002_02.study.server.service.ReadFileService;
 import deu.java002_02.study.server.service.ReadServerTimeService;
 import deu.java002_02.study.server.service.ReadUserDataService;
@@ -44,20 +47,34 @@ public final class ProviderThread extends StudyThread
 	@Override
 	public void run()
 	{
-		while(super.isRun() && !m_netModule.isClosed())
+		try
 		{
-			String header = m_netModule.readLine();
-
-			if(header != null)
+			while(super.isRun() && !m_netModule.isClosed())
 			{
-				IService service = switchService(header);
-				
-				if(service != null)
-					service.tryExecuteService();
+				String header = m_netModule.readLine();
+	
+				if(header != null)
+				{
+					IService service = switchService(header);
+					
+					if(service != null)
+					{
+						service.tryExecuteService();
+
+						if(service instanceof IConnectionService)
+							((IConnectionService)service).bindConnectionModule(null);
+					}
+				}
 			}
 		}
-
-		this.stop();
+		catch(Exception _ex)
+		{
+			_ex.printStackTrace();
+		}
+		finally
+		{
+			this.stop();
+		}
 	}
 
 	protected INetworkModule getNetworkModule()
@@ -73,19 +90,30 @@ public final class ProviderThread extends StudyThread
 			return null;
 		case "READ_FILE_SERVICE_TEST":
 			ReadFileService rfs = new ReadFileService("C:/Programming/Java/StudyCafe/TestFiles/FileMonitorService.txt");
-			((INetworkService)rfs).bindNetworkModule(this.getNetworkModule());
+			rfs.bindNetworkModule(this.getNetworkModule());
 			return rfs;
 		case "READ_USER_DATA_SERVICE":
 			ReadUserDataService ruds = new ReadUserDataService();
-			((INetworkService)ruds).bindNetworkModule(this.getNetworkModule());
+			ruds.bindNetworkModule(this.getNetworkModule());
 			ServerMain.getDB().requestService(ruds);
 			return ruds;
 		case "READ_SERVER_TIME_SERVICE":
 			ReadServerTimeService rsts = new ReadServerTimeService();
-			((INetworkService)rsts).bindNetworkModule(this.getNetworkModule());
+			rsts.bindNetworkModule(this.getNetworkModule());
 			return rsts;
+		case "JOIN_SERVICE":
+			JoinService js = new JoinService();
+			js.bindNetworkModule(this.getNetworkModule());
+			ServerMain.getDB().requestService(js);
+			return js;
+		case "LOGIN_SERVICE":
+			LoginService ls = new LoginService();
+			ls.bindNetworkModule(this.getNetworkModule());
+			ServerMain.getDB().requestService(ls);
+			return ls;
 		default:
 			System.out.println("ProviderThread: Invalid header requested.");
+			System.out.println("  _header == " + _header);
 			return null;
 		}
 	}

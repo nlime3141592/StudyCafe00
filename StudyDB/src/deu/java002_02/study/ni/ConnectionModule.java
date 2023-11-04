@@ -35,7 +35,7 @@ public class ConnectionModule implements IConnectionModule
 			PreparedStatement state = m_dbConnection.prepareStatement(_sqlFormat);
 			
 			for(int i = 0; i < _parameters.length; ++i)
-				state.setObject(i + 1, _parameters[i]);
+				state.setObject(i + 1, _parameters[i].equals(NetworkLiteral.NULL) ? null : _parameters[i]);
 
 			return state.executeQuery();
 		}
@@ -56,7 +56,7 @@ public class ConnectionModule implements IConnectionModule
 			PreparedStatement state = m_dbConnection.prepareStatement(_sqlFormat);
 			
 			for(int i = 0; i < _parameters.length; ++i)
-				state.setObject(i + 1, _parameters[i]);
+				state.setObject(i + 1, _parameters[i].equals(NetworkLiteral.NULL) ? null : _parameters[i]);
 
 			return state.executeUpdate();
 		}
