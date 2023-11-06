@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
-    <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
-    <fullyQualifiedTypeName name="deu.java002_02.server.service.FileMonitorService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.StandardNetworkModule"/>
-    <fullyQualifiedTypeName name="java.net.Socket"/>
-    <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.event.ServiceEvent01"/>
-    <fullyQualifiedTypeName name="deu.java002_02.tprovider.main.TProviderMain"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.service.TService01"/>
     <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.TestGui"/>
     <fullyQualifiedTypeName name="java.nio.file.Paths"/>
@@ -22,16 +15,11 @@
     <fullyQualifiedTypeName name="java.util.Queue"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.INetworkService"/>
     <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkLiteral"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.IService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionModule"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.StandardConnectionModule"/>
-    <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.StandardNetworkModule"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReadServerTimeService"/>
     <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArraySet"/>
@@ -47,9 +35,7 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.ConnectionModule"/>
     <fullyQualifiedTypeName name="java.sql.SQLTimeoutException"/>
-    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.ThreadState"/>
-    <fullyQualifiedTypeName name="java.util.Vector"/>
     <fullyQualifiedTypeName name="java.awt.Font"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
@@ -60,4 +46,18 @@
     <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.JoinService"/>
+    <fullyQualifiedTypeName name="java.net.Socket"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.LoginService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="java.security.Provider.Service"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.JoinService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.LoginService"/>
 </qualifiedTypeNameHistroy>

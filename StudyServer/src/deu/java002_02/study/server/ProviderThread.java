@@ -101,16 +101,6 @@ public final class ProviderThread extends StudyThread
 			ReadServerTimeService rsts = new ReadServerTimeService();
 			rsts.bindNetworkModule(this.getNetworkModule());
 			return rsts;
-		case "JOIN_SERVICE":
-			JoinService js = new JoinService();
-			js.bindNetworkModule(this.getNetworkModule());
-			ServerMain.getDB().requestService(js);
-			return js;
-		case "LOGIN_SERVICE":
-			LoginService ls = new LoginService();
-			ls.bindNetworkModule(this.getNetworkModule());
-			ServerMain.getDB().requestService(ls);
-			return ls;
 		default:
 			System.out.println("ProviderThread: Invalid header requested.");
 			System.out.println("  _header == " + _header);

@@ -109,7 +109,11 @@ public final class NetworkModule implements INetworkModule
 
 		try
 		{
-			m_bw.write(_line + "\n");
+			if(_line == null)
+				m_bw.write(NetworkLiteral.NULL + "\n");
+			else
+				m_bw.write(_line + "\n");
+
 			m_bw.flush();
 		}
 		catch (IOException e)

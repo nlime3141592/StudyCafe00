@@ -1,6 +1,0 @@
-package deu.java002_02.ni;
-
-public interface IBusinessService
-{
-	void onService(INetworkService _netService);
-}

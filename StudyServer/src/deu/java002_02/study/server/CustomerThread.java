@@ -4,6 +4,8 @@ import deu.java002_02.study.main.IService;
 import deu.java002_02.study.main.StudyThread;
 import deu.java002_02.study.main.ThreadState;
 import deu.java002_02.study.ni.INetworkModule;
+import deu.java002_02.study.server.service.JoinService;
+import deu.java002_02.study.server.service.LoginService;
 
 public class CustomerThread extends StudyThread
 {
@@ -65,6 +67,16 @@ public class CustomerThread extends StudyThread
 	{
 		switch(_header)
 		{
+		case "JOIN_SERVICE":
+			JoinService js = new JoinService();
+			js.bindNetworkModule(this.getNetworkModule());
+			ServerMain.getDB().requestService(js);
+			return js;
+		case "LOGIN_SERVICE":
+			LoginService ls = new LoginService();
+			ls.bindNetworkModule(this.getNetworkModule());
+			ServerMain.getDB().requestService(ls);
+			return ls;
 		default:
 			return null;
 		}

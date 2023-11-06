@@ -1,7 +1,0 @@
-package deu.java002_02.server2.service;
-
-public interface INetworkService
-{
-	String readLine();
-	void writeLine(String _);
-}

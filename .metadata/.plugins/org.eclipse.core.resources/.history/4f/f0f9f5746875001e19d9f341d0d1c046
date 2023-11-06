@@ -1,6 +1,0 @@
-package deu.java002_02.server.service;
-
-public class HeaderParsingService extends NetworkService
-{
-
-}

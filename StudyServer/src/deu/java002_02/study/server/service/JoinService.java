@@ -3,6 +3,7 @@ package deu.java002_02.study.server.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
@@ -30,26 +31,25 @@ public class JoinService extends Service implements INetworkService, IConnection
 		}
 
 		int count = 0;
-		String[] lines = new String[8]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
+		String[] lines = new String[5]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
 
 		while(count < lines.length)
 		{
 			lines[count] = m_netModule.readLine();
-			
+
+			if(lines[count] == null) // NOTE: 통신할 수 없는 상태이므로 EOF를 보낼 수 없다. 바로 return false;
+				return false;
 			if(lines[count].equals(NetworkLiteral.EOF))
 				break;
-			
+
 			++count;
 		}
 
 		String id = lines[0];
 		String pw = lines[1];
 		String ctype = lines[2];
-		String name = lines[3];
-		String nkname = lines[4];
-		String tel = lines[5];
-		String email = lines[6];
-		
+		String nkname = lines[3];
+
 		if(isInvalidClientType(ctype))
 		{
 			m_netModule.writeLine("<INVALID_CLIENT_TYPE>");
@@ -73,8 +73,8 @@ public class JoinService extends Service implements INetworkService, IConnection
 		int uuid = getUuidById(id);
 
 		// NOTE: Add new user informations
-		String sqlUserInfo = "INSERT INTO userinfo (uuid, name, nickname, tel, email) VALUES (?, ?, ?, ?, ?)";
-		m_conModule.executeUpdate(sqlUserInfo, uuid, name, nkname, tel, email);
+		String sqlUserInfo = "INSERT INTO userinfo (uuid, nickname) VALUES (?, ?)";
+		m_conModule.executeUpdate(sqlUserInfo, uuid, nkname);
 
 		m_netModule.writeLine(NetworkLiteral.SUCCESS);
 

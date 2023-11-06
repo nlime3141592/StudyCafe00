@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;

@@ -1,8 +1,0 @@
-package deu.java002_02.tprovider.gui.event;
-
-import java.awt.event.ActionListener;
-
-public class ServiceEvent01 implements ActionListener
-{
-
-}

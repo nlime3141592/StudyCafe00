@@ -1,9 +1,0 @@
-package deu.java002_02.ni;
-
-public interface INetworkModule
-{
-	String readLine();
-	int readByte();
-
-	void writeLine(String _message);
-}

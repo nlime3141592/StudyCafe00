@@ -1,9 +1,0 @@
-package deu.java002_02.server;
-
-public class CustomerWorker extends Worker
-{
-	public CustomerWorker(int _clientPerThread, int _timeoutSecond)
-	{
-		super(_clientPerThread, int _timeoutSecond);
-	}
-}

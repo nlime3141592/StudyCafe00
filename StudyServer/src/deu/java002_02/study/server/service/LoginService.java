@@ -3,6 +3,7 @@ package deu.java002_02.study.server.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
@@ -44,15 +45,23 @@ public class LoginService extends Service implements INetworkService, IConnectio
 
 		String id = lines[0];
 		String pw = lines[1];
-		
-		boolean serviceSuccess = tryAuthenticateUser(id, pw);
-		
-		if(serviceSuccess)
-			m_netModule.writeLine(NetworkLiteral.SUCCESS);
-		else
+
+		if(!tryAuthenticateUser(id, pw))
+		{
 			m_netModule.writeLine(NetworkLiteral.FAILURE);
-		
-		return serviceSuccess;
+			return false;
+		}
+		else if(isBlackedUser(id))
+		{
+			m_netModule.writeLine("<BLACKED_ACCOUNT>");
+			return true;
+		}
+		else
+		{
+			m_netModule.writeLine(NetworkLiteral.SUCCESS);
+			m_netModule.writeLine(Integer.toString(getUuidById(id)));
+			return true;
+		}
 	}
 
 	@Override
@@ -88,6 +97,44 @@ public class LoginService extends Service implements INetworkService, IConnectio
 			// 예외가 발생한다면 인증 성공했는지 알 수 없으므로
 			// 무조건 false를 반환합니다.
 			return false;
+		}
+	}
+	
+	private boolean isBlackedUser(String _id)
+	{
+
+		try
+		{
+			String sql1 = "SELECT uuid FROM account WHERE id = ?";
+			String sql2 = "SELECT COUNT(*) FROM userinfo WHERE uuid = ? AND blacked = 1";
+
+			ResultSet rs1 = m_conModule.executeQuery(sql1, _id);
+			
+			if(!rs1.next())
+				return false;
+			
+			ResultSet rs2 = m_conModule.executeQuery(sql2, rs1.getString(1));
+			
+			return rs2.next() && rs2.getInt(1) > 0;
+		}
+		catch(SQLException _sqlEx)
+		{
+			return false;
+		}
+	}
+	
+	private int getUuidById(String _id)
+	{
+		try
+		{
+			ResultSet rs = m_conModule.executeQuery("SELECT (uuid) FROM account WHERE id = ?", _id);
+			rs.next();
+			int id = Integer.parseInt(rs.getString(1));
+			return id;
+		}
+		catch (SQLException e)
+		{
+			return 0;
 		}
 	}
 }
