@@ -1,10 +1,12 @@
 package deu.java002_02.study.provider.gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class SeatButton extends JButton implements ActionListener
 {
@@ -18,6 +20,7 @@ public class SeatButton extends JButton implements ActionListener
 	private static int s_m_width;
 	private static int s_m_height;
 
+	private JLabel m_lbSummary;
 	private int m_seatNumber = -1;
 
 	public SeatButton(int _seatNumber)
@@ -45,9 +48,22 @@ public class SeatButton extends JButton implements ActionListener
 		super.setContentAreaFilled(false);
 		super.setBorderPainted(false);
 
+		m_lbSummary = new JLabel(String.format("#%d", _seatNumber));
+		m_lbSummary.setSize(super.getWidth(), super.getHeight());
+		m_lbSummary.setHorizontalAlignment(JLabel.CENTER);
+		m_lbSummary.setVerticalAlignment(JLabel.CENTER);
+		m_lbSummary.setForeground(Color.BLACK);
+
 		m_seatNumber = _seatNumber;
-		
+
 		super.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		SeatReserveView view = new SeatReserveView(String.format("ÁÂ¼® ¹øÈ£ #%d", m_seatNumber));
+		view.showView();
 	}
 
 	@Override
@@ -64,15 +80,8 @@ public class SeatButton extends JButton implements ActionListener
 		}
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e)
+	public JLabel getSummaryLabel()
 	{
-		System.out.println("seat #" + m_seatNumber + " clicked.");
-		
-		if(Math.random() < 0.1)
-		{
-			super.setEnabled(false);
-			System.out.println("    Icon disabled...");
-		}
+		return m_lbSummary;
 	}
 }
