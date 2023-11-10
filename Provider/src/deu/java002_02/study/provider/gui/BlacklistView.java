@@ -16,7 +16,7 @@ public class BlacklistView extends View
 {
 	private int m_width;
 	private int m_height;
-	
+
 	private BlacklistTable m_table;
 	private JButton m_deleteButton;
 	private JButton m_addButton;
@@ -79,7 +79,7 @@ public class BlacklistView extends View
 		super.setSize(0, 0);
 	}
 
-	public boolean addRow(int _uuid, String _name, LocalDateTime _time)
+	public boolean addRow(int _uuid, String _name, String _time)
 	{
 		return m_table.addRow(_uuid, _name, _time);
 	}

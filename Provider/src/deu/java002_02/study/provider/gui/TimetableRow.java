@@ -50,7 +50,7 @@ public class TimetableRow extends JPanel
 		m_lbSeparator.setSize(640, 1);
 		m_lbSeparator.setLocation(0, 49);
 		m_lbSeparator.setBackground(Color.LIGHT_GRAY);
-		
+
 		m_checkBox = new JCheckBox();
 		m_checkBox.setSize(20, 20);
 		m_checkBox.setLocation(570, 15);
@@ -82,16 +82,71 @@ public class TimetableRow extends JPanel
 		m_checkBox.setSelected(_isRun);
 	}
 
-	public void setOpentime(LocalTime _time)
+	public boolean isRun()
 	{
-		m_begHH.setSelectedIndex(_time.getHour());
-		m_begMM.setSelectedIndex(_time.getMinute());
+		return m_checkBox.isSelected();
 	}
 
-	public void setClosetime(LocalTime _time)
+	public void setOpentime(int _hh, int _mm)
 	{
-		m_endHH.setSelectedIndex(_time.getHour());
-		m_endMM.setSelectedIndex(_time.getMinute());
+		m_begHH.setSelectedIndex(_hh);
+		m_begMM.setSelectedIndex(_mm);
+	}
+
+	public void setClosetime(int _hh, int _mm)
+	{
+		m_endHH.setSelectedIndex(_hh);
+		m_endMM.setSelectedIndex(_mm);
+	}
+	
+	public void setOpentimeHour(int _hh)
+	{
+		m_begHH.setSelectedIndex(_hh);
+	}
+	
+	public void setOpentimeMinute(int _mm)
+	{
+		m_begMM.setSelectedIndex(_mm);
+	}
+	
+	public void setClosetimeHour(int _hh)
+	{
+		m_endHH.setSelectedIndex(_hh);
+	}
+	
+	public void setClosetimeMinute(int _mm)
+	{
+		m_endMM.setSelectedIndex(_mm);
+	}
+	
+	public int getOpentimeHour()
+	{
+		return Integer.parseInt((String)m_begHH.getSelectedItem());
+	}
+	
+	public int getOpentimeMinute()
+	{
+		return Integer.parseInt((String)m_begMM.getSelectedItem());
+	}
+	
+	public int getClosetimeHour()
+	{
+		return Integer.parseInt((String)m_endHH.getSelectedItem());
+	}
+	
+	public int getClosetimeMinute()
+	{
+		return Integer.parseInt((String)m_endMM.getSelectedItem());
+	}
+	
+	public String getOpentimeString()
+	{
+		return String.format("%s:%s:00", m_begHH.getSelectedItem(), m_begMM.getSelectedItem());
+	}
+	
+	public String getClosetimeString()
+	{
+		return String.format("%s:%s:00", m_endHH.getSelectedItem(), m_endHH.getSelectedItem());
 	}
 
 	private JComboBox<Integer> getTimeBox(Integer[] _elements)

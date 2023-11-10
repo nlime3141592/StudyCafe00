@@ -99,13 +99,13 @@ public final class NetworkModule implements INetworkModule
 		{
 			m_isClosed = true;
 			return -1;
-		} 
+		}
 	}
 
-	public final void writeLine(String _line)
+	public final boolean writeLine(String _line)
 	{
 		if(m_isClosed)
-			return;
+			return false;
 
 		try
 		{
@@ -115,26 +115,30 @@ public final class NetworkModule implements INetworkModule
 				m_bw.write(_line + "\n");
 
 			m_bw.flush();
+			return true;
 		}
 		catch (IOException e)
 		{
 			m_isClosed = true;
+			return false;
 		}
 	}
 
-	public final void writeByte(int _byte)
+	public final boolean writeByte(int _byte)
 	{
 		if(m_isClosed)
-			return;
+			return false;
 
 		try
 		{
 			m_socket.getOutputStream().write(_byte);
 			m_socket.getOutputStream().flush();
+			return true;
 		}
 		catch (IOException e)
 		{
 			m_isClosed = true;
+			return false;
 		}
 	}
 }

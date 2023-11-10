@@ -6,7 +6,6 @@ import deu.java002_02.study.ni.NetworkLiteral;
 
 public class JoinService implements INetworkService
 {
-	private INetworkModule m_netModule;
 	private String m_id;
 	private String m_pw;
 	private String m_nickname;
@@ -18,19 +17,28 @@ public class JoinService implements INetworkService
 		m_nickname = _nickname;
 	}
 
+	// JoinService.java
+	
+	private INetworkModule m_netModule;
+	
+	// NOTE:
+	// 독서실 이용자 측 클라이언트가 사용하는 회원 가입 서비스 객체입니다.
+	// 회원 가입 서비스를 서버에 요청하고 응답받기 위해
+	// tryExecuteService() 함수를 재정의하고
+	// INetworkModule 인터페이스의 함수를 사용해 통신합니다.
 	@Override
 	public boolean tryExecuteService()
 	{
 		m_netModule.writeLine("JOIN_SERVICE");
 		m_netModule.writeLine(m_id);
 		m_netModule.writeLine(m_pw);
-		m_netModule.writeLine("1"); // NOTE: Client type, 1: customer, 2: provider
+		m_netModule.writeLine("1");
 		m_netModule.writeLine(m_nickname);
 		m_netModule.writeLine(NetworkLiteral.EOF);
-
+	
 		String response = m_netModule.readLine();		
 		System.out.println(response);
-
+	
 		switch(response)
 		{
 		case NetworkLiteral.SUCCESS:

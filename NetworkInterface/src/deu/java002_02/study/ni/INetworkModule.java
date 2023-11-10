@@ -6,6 +6,6 @@ public interface INetworkModule
 
 	String readLine();
 	int readByte();
-	void writeLine(String _line);
-	void writeByte(int _byte);
+	boolean writeLine(String _line);
+	boolean writeByte(int _byte);
 }

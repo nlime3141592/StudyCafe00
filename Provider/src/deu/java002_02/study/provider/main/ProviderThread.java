@@ -47,8 +47,10 @@ public class ProviderThread extends StudyThread
 					servicingTime += (long)(1e+6 * ProviderThread.c_FIXED_SERVICE_TIME);
 
 				for(IService service : m_realTimeServices)
+				{
 					if(service != null)
 						service.tryExecuteService();
+				}
 			}
 		}
 	}

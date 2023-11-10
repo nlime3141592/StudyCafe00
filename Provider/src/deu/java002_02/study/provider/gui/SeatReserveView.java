@@ -34,4 +34,16 @@ public class SeatReserveView extends View
 		super.setVisible(false);
 		super.setSize(0, 0);
 	}
+
+	public void addRow(int _reserveId, String _nickname, String _beginTime, String _endTime)
+	{
+		// NOTE: 현재 GUI가 구현되어 있지 않습니다.
+		// TODO: GUI 디자인이 완료된 후 이 함수를 구현해야 합니다.
+	}
+
+	public void removeRow(int _reserveId)
+	{
+		// NOTE: 현재 GUI가 구현되어 있지 않습니다.
+		// TODO: GUI 디자인이 완료된 후 이 함수를 구현해야 합니다.
+	}
 }

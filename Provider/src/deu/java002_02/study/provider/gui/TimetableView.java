@@ -25,8 +25,8 @@ public class TimetableView extends View
 		m_width = 640;
 		m_height = 480;
 		
-		m_header = new TimetableHeader();
-		m_trailer = new TimetableTrailer();
+		m_header = new TimetableHeader(this);
+		m_trailer = new TimetableTrailer(this);
 		m_rows = new TimetableRow[7];
 		
 		super.add(m_header);
@@ -51,7 +51,6 @@ public class TimetableView extends View
 		int r = inset.right;
 		int b = inset.bottom;
 		super.setSize(m_width + l + r, m_height + b + t);
-
 	}
 
 	@Override
@@ -59,5 +58,10 @@ public class TimetableView extends View
 	{
 		super.setVisible(false);
 		super.setSize(0, 0);
+	}
+
+	public TimetableRow getTimetableRow(int _day)
+	{
+		return m_rows[_day];
 	}
 }

@@ -3,7 +3,6 @@ package deu.java002_02.study.provider.gui;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,6 +19,7 @@ public class SeatView extends View
 	private int m_width;
 	private int m_height;
 	private SeatButton[] m_seatButtons;
+	private String[] m_seatLeftRunningTimes;
 	private JMenuBar m_menuBar;
 	private JLabel m_spaceLabel;
 
@@ -99,6 +99,7 @@ public class SeatView extends View
 		m_seatButtons[32] = createSeatButton(33, 544, 112);
 		m_seatButtons[33] = createSeatButton(34, 544, 144);
 		m_seatButtons[34] = createSeatButton(35, 544, 176);
+		m_seatLeftRunningTimes = new String[35];
 
 		for(int i = 0; i < m_seatButtons.length; ++i)
 		{
@@ -150,6 +151,11 @@ public class SeatView extends View
 
 		super.setVisible(false);
 		super.setSize(0, 0);
+	}
+	
+	public void setSeatLeftRunningTime(int _seatId, String _leftTime)
+	{
+		m_seatLeftRunningTimes[_seatId] = _leftTime;
 	}
 
 	private SeatButton createSeatButton(int _seatId, int _posX, int _posY)

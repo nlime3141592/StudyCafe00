@@ -7,18 +7,20 @@ import javax.swing.JPanel;
 
 public class TimetableHeader extends JPanel
 {
+	private TimetableView m_view;
 	private JLabel m_lbDay;
 	private JLabel m_lbTime;
 	private JLabel m_lbEnabled;
 	private JPanel m_separatorBlack;
 	private JPanel m_separatorGray;
 	
-	public TimetableHeader()
+	public TimetableHeader(TimetableView _view)
 	{
 		super.setLayout(null);
 		super.setLocation(0, 0);
 		super.setSize(640, 60);
 		
+		m_view = _view;
 		m_lbDay = getDayLabel();
 		m_lbTime = getTimeLabel();
 		m_lbEnabled = getEnableLabel();
