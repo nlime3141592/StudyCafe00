@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="deu.java002_02.tprovider.gui.event.ServiceEvent02"/>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkThread"/>
-    <fullyQualifiedTypeName name="java.util.Queue"/>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.INetworkService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.ni.NetworkLiteral"/>
-    <fullyQualifiedTypeName name="java.sql.Connection"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.StandardConnectionModule"/>
-    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.StandardNetworkModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReadServerTimeService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.tprovider.main.TProviderMain"/>
@@ -26,7 +18,6 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.JoinService"/>
     <fullyQualifiedTypeName name="java.net.Socket"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.LoginService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
@@ -43,10 +34,8 @@
     <fullyQualifiedTypeName name="javax.swing.JFrame"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.StudyThread"/>
     <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArraySet"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
     <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentLinkedQueue"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.IService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.main.ProviderMain"/>
     <fullyQualifiedTypeName name="java.time.LocalTime"/>
@@ -60,4 +49,15 @@
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatTimerService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatSelectService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveCancelService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.BlacklistSelectService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.BlacklistAddService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.BlacklistRemoveService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.TimetableSelectService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.TimetableUpdateService"/>
 </qualifiedTypeNameHistroy>

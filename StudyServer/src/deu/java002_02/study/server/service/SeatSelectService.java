@@ -1,5 +1,8 @@
 package deu.java002_02.study.server.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
@@ -7,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class BlacklistAddService extends Service implements INetworkService, IConnectionService
+public class SeatSelectService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -25,17 +28,18 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 			
 			if(lines[count] == null)
 			{
+				m_netModule.writeLine(NetworkLiteral.EOF);
 				m_netModule.writeLine(NetworkLiteral.ERROR);
 				return false;
 			}
-			if(lines[count].equals(NetworkLiteral.EOF))
+			else if(lines[count].equals(NetworkLiteral.EOF))
 				break;
-			
+
 			++count;
 		}
 
-		String uuid = lines[0];
-
+		String seatid = lines[0];
+		
 		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
@@ -45,21 +49,43 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 
 		if(nowTime >= endTime)
 		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("BlacklistAddService: Cannot access DB.");
+			System.out.println("SeatSelectService: Cannot access DB.");
 			return false;
 		}
 
-		String sql = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
-		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
+		String sql = "SELECT rs.res_id, rs.uuid, user.nickname, rs.tbeg, rs.tend FROM reserves AS rs JOIN userinfo AS user ON rs.seatid = ? AND rs.uuid = user.uuid AND DATEDIFF(rs.tbeg, CURRENT_TIMESTAMP()) >= 0 ORDER BY rs.tbeg";
+		ResultSet rs = m_conModule.executeQuery(sql, seatid);
 
 		// NOTE: 서비스 결과 반환
-		if(serviceSuccess)
-			m_netModule.writeLine(NetworkLiteral.SUCCESS);
-		else
-			m_netModule.writeLine(NetworkLiteral.FAILURE);
+		try
+		{
+			int resultCount = 0;
 
-		return serviceSuccess;
+			while(rs.next())
+			{
+				for(int i = 0; i < 5; ++i)
+					m_netModule.writeLine(rs.getString(i + 1));
+
+				++resultCount;
+			}
+
+			m_netModule.writeLine(NetworkLiteral.EOF);
+
+			if(resultCount > 0)
+				m_netModule.writeLine(NetworkLiteral.SUCCESS);
+			else
+				m_netModule.writeLine(NetworkLiteral.FAILURE);
+
+			return resultCount > 0;
+		}
+		catch(SQLException _sqlEx)
+		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
+			m_netModule.writeLine(NetworkLiteral.ERROR);
+			return false;
+		}
 	}
 
 	@Override

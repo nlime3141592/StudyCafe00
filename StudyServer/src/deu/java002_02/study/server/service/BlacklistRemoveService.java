@@ -15,6 +15,28 @@ public class BlacklistRemoveService extends Service implements INetworkService, 
 	@Override
 	public boolean tryExecuteService()
 	{
+		// NOTE: 정보 수신
+		int count = 0;
+		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
+
+		while(count < lines.length)
+		{
+			lines[count] = m_netModule.readLine();
+			
+			if(lines[count] == null)
+			{
+				m_netModule.writeLine(NetworkLiteral.ERROR);
+				return false;
+			}
+			else if(lines[count].equals(NetworkLiteral.EOF))
+				break;
+
+			++count;
+		}
+		
+		String uuid = lines[0];
+
+		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
 
@@ -27,26 +49,11 @@ public class BlacklistRemoveService extends Service implements INetworkService, 
 			System.out.println("BlacklistRemoveService: Cannot access DB.");
 			return false;
 		}
-		
-		int count = 0;
-		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
 
-		while(count < lines.length)
-		{
-			lines[count] = m_netModule.readLine();
-			
-			if(lines[count].equals(NetworkLiteral.EOF))
-				break;
-			
-			++count;
-		}
-		
-		String uuid = lines[0];
-
-		String sql = "update userinfo set blacked = 0, bdate = 0 where uuid = ?";
-		
+		String sql = "UPDATE userinfo SET blacked = 0, bdate = 0 WHERE uuid = ?";
 		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
 
+		// NOTE: 서비스 결과 반환
 		if(serviceSuccess)
 			m_netModule.writeLine(NetworkLiteral.SUCCESS);
 		else

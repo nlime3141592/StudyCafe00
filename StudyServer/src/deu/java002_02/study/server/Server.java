@@ -11,7 +11,7 @@ import deu.java002_02.study.ni.NetworkModule;
 
 public class Server extends StudyThread
 {
-	private static final int c_PORT = 28170;
+	private static final int c_PORT = 25565;
 	// private static final int c_PORT_CUSTOMER = 28171;
 	// private static final int c_PORT_PROVIDER = 28172;
 

@@ -7,7 +7,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class BlacklistAddService extends Service implements INetworkService, IConnectionService
+public class ReserveCancelService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -28,9 +28,9 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 				m_netModule.writeLine(NetworkLiteral.ERROR);
 				return false;
 			}
-			if(lines[count].equals(NetworkLiteral.EOF))
+			else if(lines[count].equals(NetworkLiteral.EOF))
 				break;
-			
+
 			++count;
 		}
 
@@ -46,11 +46,11 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 		if(nowTime >= endTime)
 		{
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("BlacklistAddService: Cannot access DB.");
+			System.out.println("ReserveCancelService: Cannot access DB.");
 			return false;
 		}
 
-		String sql = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
+		String sql = "DELETE FROM reserves WHERE res_id = ?";
 		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
 
 		// NOTE: 서비스 결과 반환

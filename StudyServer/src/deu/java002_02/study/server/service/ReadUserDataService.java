@@ -10,6 +10,8 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
+// TEST: 서버-클라이언트 통신 테스트를 위한 테스트 서비스 클래스입니다.
+// TODO: 서버, 클라이언트 양쪽 서비스 클래스 구현이 끝난 후 삭제합니다.
 public final class ReadUserDataService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;

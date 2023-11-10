@@ -1,5 +1,8 @@
 package deu.java002_02.study.server.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
@@ -7,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class BlacklistAddService extends Service implements INetworkService, IConnectionService
+public class TimetableSelectService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -15,27 +18,6 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 	@Override
 	public boolean tryExecuteService()
 	{
-		// NOTE: 정보 수신
-		int count = 0;
-		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
-
-		while(count < lines.length)
-		{
-			lines[count] = m_netModule.readLine();
-			
-			if(lines[count] == null)
-			{
-				m_netModule.writeLine(NetworkLiteral.ERROR);
-				return false;
-			}
-			if(lines[count].equals(NetworkLiteral.EOF))
-				break;
-			
-			++count;
-		}
-
-		String uuid = lines[0];
-
 		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
@@ -45,21 +27,42 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 
 		if(nowTime >= endTime)
 		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("BlacklistAddService: Cannot access DB.");
+			System.out.println("TimetableSelectService: Cannot access DB.");
 			return false;
 		}
 
-		String sql = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
-		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
+		String sql = "SELECT day, service_enable, tbeg, tend FROM service_on_air";
+		ResultSet rs = m_conModule.executeQuery(sql);
 
-		// NOTE: 서비스 결과 반환
-		if(serviceSuccess)
-			m_netModule.writeLine(NetworkLiteral.SUCCESS);
-		else
-			m_netModule.writeLine(NetworkLiteral.FAILURE);
+		try
+		{
+			int resultCount = 0;
 
-		return serviceSuccess;
+			while(rs.next())
+			{
+				for(int i = 0; i < 4; ++i)
+					m_netModule.writeLine(rs.getString(i + 1));
+				
+				++resultCount;
+			}
+
+			m_netModule.writeLine(NetworkLiteral.EOF);
+			
+			if(resultCount > 0)
+				m_netModule.writeLine(NetworkLiteral.SUCCESS);
+			else
+				m_netModule.writeLine(NetworkLiteral.FAILURE);
+
+			return resultCount > 0;
+		}
+		catch(SQLException _sqlEx)
+		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
+			m_netModule.writeLine(NetworkLiteral.ERROR);
+			return false;
+		}
 	}
 
 	@Override

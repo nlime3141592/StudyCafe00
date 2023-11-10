@@ -10,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class OnAirTimeTableService extends Service implements INetworkService, IConnectionService
+public class BlacklistSelectService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -18,6 +18,7 @@ public class OnAirTimeTableService extends Service implements INetworkService, I
 	@Override
 	public boolean tryExecuteService()
 	{
+		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
 
@@ -26,25 +27,40 @@ public class OnAirTimeTableService extends Service implements INetworkService, I
 
 		if(nowTime >= endTime)
 		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("OnAirTimeTableService: Cannot access DB.");
+			System.out.println("BlacklistSelectService: Cannot access DB.");
 			return false;
 		}
 
-		String sql = "select day, service_enable, tbeg, tend from service_on_air";
+		String sql = "SELECT uuid, nickname, bdate FROM userinfo WHERE blacked = 1 ORDER BY uuid";
 		ResultSet rs = m_conModule.executeQuery(sql);
-		
+
+		// NOTE: 서비스 결과 반환
 		try
 		{
+			int resultCount = 0;
+
 			while(rs.next())
-				for(int i = 0; i < 4; ++i)
+			{
+				for(int i = 0; i < 3; ++i)
 					m_netModule.writeLine(rs.getString(i + 1));
 
+				++resultCount;
+			}
+
 			m_netModule.writeLine(NetworkLiteral.EOF);
-			return true;
+
+			if(resultCount > 0)
+				m_netModule.writeLine(NetworkLiteral.SUCCESS);
+			else
+				m_netModule.writeLine(NetworkLiteral.FAILURE);
+
+			return resultCount > 0;
 		}
 		catch(SQLException _sqlEx)
 		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
 			return false;
 		}

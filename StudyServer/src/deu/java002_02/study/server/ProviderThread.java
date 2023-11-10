@@ -6,11 +6,19 @@ import deu.java002_02.study.main.ThreadState;
 import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
+import deu.java002_02.study.server.service.BlacklistAddService;
+import deu.java002_02.study.server.service.BlacklistRemoveService;
+import deu.java002_02.study.server.service.BlacklistSelectService;
 import deu.java002_02.study.server.service.JoinService;
 import deu.java002_02.study.server.service.LoginService;
 import deu.java002_02.study.server.service.ReadFileService;
 import deu.java002_02.study.server.service.ReadServerTimeService;
 import deu.java002_02.study.server.service.ReadUserDataService;
+import deu.java002_02.study.server.service.ReserveCancelService;
+import deu.java002_02.study.server.service.SeatSelectService;
+import deu.java002_02.study.server.service.SeatTimerService;
+import deu.java002_02.study.server.service.TimetableSelectService;
+import deu.java002_02.study.server.service.TimetableUpdateService;
 
 public final class ProviderThread extends StudyThread
 {
@@ -88,6 +96,8 @@ public final class ProviderThread extends StudyThread
 		{
 		case "END_CONNECTION":
 			return null;
+
+		// NOTE: 테스트용 서비스
 		case "READ_FILE_SERVICE_TEST":
 			ReadFileService rfs = new ReadFileService("C:/Programming/Java/StudyCafe/TestFiles/FileMonitorService.txt");
 			rfs.bindNetworkModule(this.getNetworkModule());
@@ -101,6 +111,41 @@ public final class ProviderThread extends StudyThread
 			ReadServerTimeService rsts = new ReadServerTimeService();
 			rsts.bindNetworkModule(this.getNetworkModule());
 			return rsts;
+
+		// NOTE: 서버 측 서비스
+		case "SEAT_TIMER_SERVICE":
+			SeatTimerService sts = new SeatTimerService();
+			sts.bindNetworkModule(m_netModule);
+			return sts;
+		case "SEAT_SELECT_SERVICE":
+			SeatSelectService sss = new SeatSelectService();
+			sss.bindNetworkModule(m_netModule);
+			return sss;
+		case "RESERVE_CANCEL_SERVICE":
+			ReserveCancelService rcs = new ReserveCancelService();
+			rcs.bindNetworkModule(m_netModule);
+			return rcs;
+		case "BLACKLIST_SELECT_SERVICE":
+			BlacklistSelectService blss = new BlacklistSelectService();
+			blss.bindNetworkModule(m_netModule);
+			return blss;
+		case "BLACKLIST_ADD_SERVICE":
+			BlacklistAddService blas = new BlacklistAddService();
+			blas.bindNetworkModule(m_netModule);
+			return blas;
+		case "BLACKLIST_REMOVE_SERVICE":
+			BlacklistRemoveService blrs = new BlacklistRemoveService();
+			blrs.bindNetworkModule(m_netModule);
+			return blrs;
+		case "TIMETABLE_SELECT_SERVICE":
+			TimetableSelectService ttss = new TimetableSelectService();
+			ttss.bindNetworkModule(m_netModule);
+			return ttss;
+		case "TIMETABLE_UPDATE_SERVICE":
+			TimetableUpdateService ttus = new TimetableUpdateService();
+			ttus.bindNetworkModule(m_netModule);
+			return ttus;
+
 		default:
 			System.out.println("ProviderThread: Invalid header requested.");
 			System.out.println("  _header == " + _header);

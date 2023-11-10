@@ -10,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class BlacklistTableService extends Service implements INetworkService, IConnectionService
+public class SeatTimerService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -18,6 +18,7 @@ public class BlacklistTableService extends Service implements INetworkService, I
 	@Override
 	public boolean tryExecuteService()
 	{
+		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
 
@@ -26,27 +27,41 @@ public class BlacklistTableService extends Service implements INetworkService, I
 
 		if(nowTime >= endTime)
 		{
-			System.out.println("BlacklistTableService: Cannot access DB.");
+			m_netModule.writeLine(NetworkLiteral.EOF);
+			m_netModule.writeLine(NetworkLiteral.ERROR);
+			System.out.println("SeatTimerService: Cannot access DB.");
 			return false;
 		}
-		
-		String sql = "SELECT uuid, nickname, bdate FROM userinfo WHERE blacked = 1 ORDER BY uuid";
-		ResultSet rs = m_conModule.executeQuery(sql);
 
+		String sql = "SELECT seatid, TIMEDIFF(tend, current_timestamp) FROM reserves WHERE current_timestamp >= tbeg AND current_timestamp < tend ORDER BY seatid, tbeg";
+		ResultSet rs = m_conModule.executeQuery(sql);
+		
+		// NOTE: 서비스 결과 반환
 		try
 		{
+			int resultCount = 0;
+
 			while(rs.next())
 			{
-				m_netModule.writeLine(rs.getString(1));
-				m_netModule.writeLine(rs.getString(2));
-				m_netModule.writeLine(rs.getString(3));
+				for(int i = 0; i < 2; ++i)
+					m_netModule.writeLine(rs.getString(i + 1));
+
+				++resultCount;
 			}
 
 			m_netModule.writeLine(NetworkLiteral.EOF);
-			return true;
+
+			if(resultCount > 0)
+				m_netModule.writeLine(NetworkLiteral.SUCCESS);
+			else
+				m_netModule.writeLine(NetworkLiteral.FAILURE);
+
+			return resultCount > 0;
 		}
 		catch(SQLException _sqlEx)
 		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
+			m_netModule.writeLine(NetworkLiteral.ERROR);
 			return false;
 		}
 	}
@@ -68,5 +83,4 @@ public class BlacklistTableService extends Service implements INetworkService, I
 	{
 		m_netModule = _netModule;
 	}
-
 }
