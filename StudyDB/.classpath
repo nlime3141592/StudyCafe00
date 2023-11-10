@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NetworkInterface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StudySystem"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/NetworkInterface"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StudySystem"/>
+	<classpathentry kind="lib" path="C:/Programming/Java/StudyCafe00/mariadb-java-client-3.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
