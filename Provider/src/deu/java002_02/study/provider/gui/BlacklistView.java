@@ -21,6 +21,9 @@ public class BlacklistView extends View
 	private JButton m_deleteButton;
 	private JButton m_addButton;
 	private JPanel m_buttonPanel;
+	
+	private BlacklistAddView m_addView;
+	private BlacklistRemoveView m_removeView;
 
 	public BlacklistView(String _title)
 	{
@@ -40,6 +43,7 @@ public class BlacklistView extends View
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO: 삭제 버튼을 눌렀을 때 보여줄 GUI를 생성합니다.
+				m_removeView.show();
 			}
 		});
 		m_addButton = new JButton("추가");
@@ -49,11 +53,14 @@ public class BlacklistView extends View
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO: 추가 버튼을 눌렀을 때 보여줄 GUI를 생성합니다.
+				m_addView.show();
 			}
 		});
 		m_buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		m_buttonPanel.add(m_deleteButton);
 		m_buttonPanel.add(m_addButton);
+		m_addView = new BlacklistAddView(this);
+		m_removeView = new BlacklistRemoveView(this);
 
 		super.getContentPane().add(new JScrollPane(m_table), BorderLayout.CENTER);
 		super.getContentPane().add(m_buttonPanel, BorderLayout.SOUTH);

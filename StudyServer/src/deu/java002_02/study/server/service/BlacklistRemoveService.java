@@ -33,7 +33,7 @@ public class BlacklistRemoveService extends Service implements INetworkService, 
 
 			++count;
 		}
-		
+
 		String uuid = lines[0];
 
 		// NOTE: 데이터베이스 서비스 진입

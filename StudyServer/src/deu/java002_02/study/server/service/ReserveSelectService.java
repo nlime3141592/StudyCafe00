@@ -10,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class BlacklistAddService extends Service implements INetworkService, IConnectionService
+public class ReserveSelectService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -28,12 +28,13 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 			
 			if(lines[count] == null)
 			{
+				m_netModule.writeLine(NetworkLiteral.EOF);
 				m_netModule.writeLine(NetworkLiteral.ERROR);
 				return false;
 			}
-			if(lines[count].equals(NetworkLiteral.EOF))
+			else if(lines[count].equals(NetworkLiteral.EOF))
 				break;
-			
+
 			++count;
 		}
 
@@ -48,40 +49,43 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 
 		if(nowTime >= endTime)
 		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("BlacklistAddService: Cannot access DB.");
+			System.out.println("ReserveSelectService: Cannot access DB.");
 			return false;
 		}
 
-		String sqlUpdate = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
-		boolean serviceSuccess = m_conModule.executeUpdate(sqlUpdate, uuid) > 0;
+		String sql = "SELECT res_id, seatid, tbeg, tend, resdate FROM reserves WHERE uuid = ? ORDER BY tbeg";
+		ResultSet rs = m_conModule.executeQuery(sql, uuid);
 
 		// NOTE: 서비스 결과 반환
-		if(serviceSuccess)
+		try
 		{
-			String sqlSelect = "SELECT nickname, bdate FROM userinfo WHERE uuid = ? ORDER BY uuid";
-			ResultSet rs = m_conModule.executeQuery(sqlSelect, uuid);
-			
-			try
+			int resultCount = 0;
+
+			while(rs.next())
 			{
-				rs.next();
-				m_netModule.writeLine(rs.getString(1));
-				m_netModule.writeLine(rs.getString(2));
+				for(int i = 0; i < 5; ++i)
+					m_netModule.writeLine(rs.getString(i + 1));
+
+				++resultCount;
+			}
+
+			m_netModule.writeLine(NetworkLiteral.EOF);
+
+			if(resultCount > 0)
 				m_netModule.writeLine(NetworkLiteral.SUCCESS);
-			}
-			catch (SQLException e)
-			{
-				m_netModule.writeLine(NetworkLiteral.EOF);
+			else
 				m_netModule.writeLine(NetworkLiteral.FAILURE);
-			}
+
+			return resultCount > 0;
 		}
-		else
+		catch(SQLException _sqlEx)
 		{
 			m_netModule.writeLine(NetworkLiteral.EOF);
-			m_netModule.writeLine(NetworkLiteral.FAILURE);
+			m_netModule.writeLine(NetworkLiteral.ERROR);
+			return false;
 		}
-
-		return serviceSuccess;
 	}
 
 	@Override

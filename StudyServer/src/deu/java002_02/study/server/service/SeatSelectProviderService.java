@@ -10,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class SeatSelectService extends Service implements INetworkService, IConnectionService
+public class SeatSelectProviderService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -51,7 +51,7 @@ public class SeatSelectService extends Service implements INetworkService, IConn
 		{
 			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("SeatSelectService: Cannot access DB.");
+			System.out.println("SeatSelectProviderService: Cannot access DB.");
 			return false;
 		}
 

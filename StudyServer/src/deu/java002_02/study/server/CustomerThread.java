@@ -3,9 +3,16 @@ package deu.java002_02.study.server;
 import deu.java002_02.study.main.IService;
 import deu.java002_02.study.main.StudyThread;
 import deu.java002_02.study.main.ThreadState;
+import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
+import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.server.service.JoinService;
 import deu.java002_02.study.server.service.LoginService;
+import deu.java002_02.study.server.service.ReserveCancelService;
+import deu.java002_02.study.server.service.ReserveSelectService;
+import deu.java002_02.study.server.service.ReserveService;
+import deu.java002_02.study.server.service.SeatSelectCustomerService;
+import deu.java002_02.study.server.service.SeatTimerService;
 
 public class CustomerThread extends StudyThread
 {
@@ -17,7 +24,7 @@ public class CustomerThread extends StudyThread
 		
 		m_netModule = _netModule; 
 	}
-	
+
 	@Override
 	public void start()
 	{
@@ -42,42 +49,70 @@ public class CustomerThread extends StudyThread
 	@Override
 	public void run()
 	{
-		while(super.isRun() && !m_netModule.isClosed())
+		try
 		{
-			String header = m_netModule.readLine();
-
-			if(header != null)
+			while(super.isRun() && !m_netModule.isClosed())
 			{
-				IService service = switchService(header);
-				
-				if(service != null)
-					service.tryExecuteService();
+				String header = m_netModule.readLine();
+	
+				if(header != null)
+				{
+					IService service = switchService(header);
+
+					if(service != null)
+					{
+						if(service instanceof INetworkService)
+							((INetworkService)service).bindNetworkModule(m_netModule);
+						if(service instanceof IConnectionService)
+							ServerMain.getDB().requestService((IConnectionService)service);
+	
+						service.tryExecuteService();
+	
+						if(service instanceof IConnectionService)
+							((IConnectionService)service).bindConnectionModule(null);
+					}
+				}
 			}
+
+			this.stop();
 		}
-
-		this.stop();
-	}
-
-	protected INetworkModule getNetworkModule()
-	{
-		return m_netModule;
+		catch(Exception _ex)
+		{
+			_ex.printStackTrace();
+		}
+		finally
+		{
+			this.stop();
+		}
 	}
 
 	private IService switchService(String _header)
 	{
 		switch(_header)
 		{
+		case "END_CONNECTION":
+			this.stop();
+			return null;
+
+		// NOTE: 독서실 이용자 측 서버 서비스
 		case "JOIN_SERVICE":
-			JoinService js = new JoinService();
-			js.bindNetworkModule(this.getNetworkModule());
-			ServerMain.getDB().requestService(js);
-			return js;
+			return new JoinService();
 		case "LOGIN_SERVICE":
-			LoginService ls = new LoginService();
-			ls.bindNetworkModule(this.getNetworkModule());
-			ServerMain.getDB().requestService(ls);
-			return ls;
+			return new LoginService();
+		case "SEAT_TIMER_SERVICE":
+			return new SeatTimerService();
+		case "RESERVE_SERVICE":
+			return new ReserveService();
+		case "RESERVE_CANCEL_SERVICE":
+			return new ReserveCancelService();
+		case "RESERVE_SELECT_SERVICE":
+			return new ReserveSelectService();
+		case "SEAT_SELECT_SERVICE":
+			return new SeatSelectCustomerService();
+
 		default:
+			System.out.println("CustomerThread: Invalid header requested.");
+			System.out.println("  _header == " + _header);
 			return null;
 		}
 	}

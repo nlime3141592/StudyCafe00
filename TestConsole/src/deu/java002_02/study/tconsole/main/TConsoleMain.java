@@ -7,22 +7,20 @@ import java.net.SocketAddress;
 
 import deu.java002_02.study.customer.service.JoinService;
 import deu.java002_02.study.customer.service.LoginService;
-import deu.java002_02.study.ni.INetworkModule;
-import deu.java002_02.study.ni.NetworkLiteral;
 import deu.java002_02.study.ni.NetworkModule;
 
 public class TConsoleMain
 {
 	public static void main(String[] args)
 	{
-		main_joinService();
+		// main_joinService();
 		// main_loginService();
 	}
-	
+
 	private static void main_joinService()
 	{
 		Socket socket = new Socket();
-		SocketAddress address = new InetSocketAddress("182.219.102.71", 10073);
+		SocketAddress address = new InetSocketAddress("localhost", 10073);
 
 		try
 		{

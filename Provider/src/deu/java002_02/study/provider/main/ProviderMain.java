@@ -9,6 +9,7 @@ public class ProviderMain
 	public static void main(String[] args)
 	{
 		s_m_pThread = new ProviderThread(null);
+		s_m_pThread.start();
 
 		new SeatView("예약 현황판").showView();
 	}

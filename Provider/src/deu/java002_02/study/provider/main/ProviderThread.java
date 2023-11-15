@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import deu.java002_02.study.main.IService;
+import deu.java002_02.study.main.Service;
 import deu.java002_02.study.main.StudyThread;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
@@ -36,7 +37,14 @@ public class ProviderThread extends StudyThread
 			while(m_eventServices.size() > 0)
 			{
 				IService service = m_eventServices.poll();
-				service.tryExecuteService();
+
+				if(service instanceof Service)
+					((Service)service).onServiceStart();
+
+				boolean executionResult = service.tryExecuteService();
+
+				if(service instanceof Service)
+					((Service)service).onServiceEnd(executionResult);
 			}
 
 			long currentNanoTime = System.nanoTime();
