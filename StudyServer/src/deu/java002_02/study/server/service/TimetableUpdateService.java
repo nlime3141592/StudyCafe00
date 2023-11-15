@@ -32,7 +32,7 @@ public class TimetableUpdateService extends Service implements INetworkService, 
 
 			++count;
 		}
-		
+
 		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
@@ -47,10 +47,10 @@ public class TimetableUpdateService extends Service implements INetworkService, 
 			return false;
 		}
 
-		String sql = "UPDATE service_on_air SET day = ?, service_enable = ?, tbeg = ?, tend = ?";
+		String sql = "UPDATE service_on_air SET service_enable = ?, tbeg = ?, tend = ? WHERE day = ?";
 
 		for(int i = 0; i < 7; ++i)
-			m_conModule.executeUpdate(sql, lines[4 * i + 0], lines[4 * i + 1], lines[4 * i + 2], lines[4 * i + 3]);
+			m_conModule.executeUpdate(sql, lines[4 * i + 1], lines[4 * i + 2], lines[4 * i + 3], lines[4 * i + 0]);
 
 		// NOTE: 서비스 결과 반환
 		m_netModule.writeLine(NetworkLiteral.SUCCESS);

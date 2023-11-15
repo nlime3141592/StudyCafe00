@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import deu.java002_02.study.main.Service;
 import deu.java002_02.study.provider.main.ProviderMain;
-import deu.java002_02.study.provider.service.TestBlacklistAddService;
+import deu.java002_02.study.provider.service.BlacklistAddService;
 
 public class BlacklistAddView
 {
@@ -22,14 +22,12 @@ public class BlacklistAddView
 		if(uuidString == null)
 			return;
 
-		System.out.println("ad view : [" + uuidString + "]");
-
 		try
 		{
 			int uuid = Integer.parseInt(uuidString.trim());
 			
 			// TODO: 서비스 구현이 끝나면 주석을 해제합니다.
-			Service service = new TestBlacklistAddService(m_blacklistView, uuid);
+			Service service = new BlacklistAddService(m_blacklistView, uuid);
 			ProviderMain.getProviderThread().registerEventService(service);
 			
 			while(!service.isServiceEnded())

@@ -121,22 +121,22 @@ public class TimetableRow extends JPanel
 	
 	public int getOpentimeHour()
 	{
-		return Integer.parseInt((String)m_begHH.getSelectedItem());
+		return (int)m_begHH.getSelectedItem();
 	}
 	
 	public int getOpentimeMinute()
 	{
-		return Integer.parseInt((String)m_begMM.getSelectedItem());
+		return (int)m_begMM.getSelectedItem();
 	}
 	
 	public int getClosetimeHour()
 	{
-		return Integer.parseInt((String)m_endHH.getSelectedItem());
+		return (int)m_endHH.getSelectedItem();
 	}
 	
 	public int getClosetimeMinute()
 	{
-		return Integer.parseInt((String)m_endMM.getSelectedItem());
+		return (int)m_endMM.getSelectedItem();
 	}
 	
 	public String getOpentimeString()

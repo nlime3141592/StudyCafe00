@@ -37,12 +37,15 @@ public class SeatReserveView extends View
 
 	public void addRow(int _reserveId, String _nickname, String _beginTime, String _endTime)
 	{
+		System.out.println(String.format("추가됨, %d, %s, %s, %s", _reserveId, _nickname, _beginTime, _endTime));
 		// NOTE: 현재 GUI가 구현되어 있지 않습니다.
 		// TODO: GUI 디자인이 완료된 후 이 함수를 구현해야 합니다.
 	}
 
 	public void removeRow(int _reserveId)
 	{
+		System.out.println(String.format("제거됨, %d", _reserveId));
+
 		// NOTE: 현재 GUI가 구현되어 있지 않습니다.
 		// TODO: GUI 디자인이 완료된 후 이 함수를 구현해야 합니다.
 	}

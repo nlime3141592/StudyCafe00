@@ -37,14 +37,7 @@ public class ProviderThread extends StudyThread
 			while(m_eventServices.size() > 0)
 			{
 				IService service = m_eventServices.poll();
-
-				if(service instanceof Service)
-					((Service)service).onServiceStart();
-
-				boolean executionResult = service.tryExecuteService();
-
-				if(service instanceof Service)
-					((Service)service).onServiceEnd(executionResult);
+				handleService(service);
 			}
 
 			long currentNanoTime = System.nanoTime();
@@ -55,10 +48,7 @@ public class ProviderThread extends StudyThread
 					servicingTime += (long)(1e+6 * ProviderThread.c_FIXED_SERVICE_TIME);
 
 				for(IService service : m_realTimeServices)
-				{
-					if(service != null)
-						service.tryExecuteService();
-				}
+					handleService(service);
 			}
 		}
 	}
@@ -113,5 +103,22 @@ public class ProviderThread extends StudyThread
 				return true;
 			}
 		});
+	}
+	
+	private boolean handleService(IService _service)
+	{
+		if(_service == null)
+			return false;
+		if(_service instanceof Service)
+			((Service)_service).onServiceStart();
+		if(_service instanceof INetworkService)
+			((INetworkService)_service).bindNetworkModule(m_netModule);
+
+		boolean executionResult = _service.tryExecuteService();
+
+		if(_service instanceof Service)
+			((Service)_service).onServiceEnd(executionResult);
+		
+		return executionResult;
 	}
 }

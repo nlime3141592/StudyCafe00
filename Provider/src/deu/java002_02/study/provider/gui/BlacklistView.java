@@ -5,12 +5,14 @@ import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import deu.java002_02.study.provider.main.ProviderMain;
+import deu.java002_02.study.provider.service.BlacklistSelectService;
 
 public class BlacklistView extends View
 {
@@ -64,6 +66,9 @@ public class BlacklistView extends View
 
 		super.getContentPane().add(new JScrollPane(m_table), BorderLayout.CENTER);
 		super.getContentPane().add(m_buttonPanel, BorderLayout.SOUTH);
+		
+		BlacklistSelectService service = new BlacklistSelectService(this);
+		ProviderMain.getProviderThread().registerEventService(service);
 	}
 
 	@Override

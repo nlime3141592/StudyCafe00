@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import deu.java002_02.study.main.Service;
 import deu.java002_02.study.provider.main.ProviderMain;
-import deu.java002_02.study.provider.service.TestBlacklistRemoveService;
+import deu.java002_02.study.provider.service.BlacklistRemoveService;
 
 public class BlacklistRemoveView
 {
@@ -18,11 +18,9 @@ public class BlacklistRemoveView
 	public void show()
 	{
 		String uuidString = JOptionPane.showInputDialog(null, "블랙리스트에서 삭제할 사용자의 고유 번호를 입력하세요.");
-		
+
 		if(uuidString == null)
 			return;
-
-		System.out.println("rm view : [" + uuidString + "]");
 
 		try
 		{
@@ -31,7 +29,7 @@ public class BlacklistRemoveView
 			// TODO: 서비스 구현이 끝나면 주석을 해제합니다.
 			// ProviderMain.getProviderThread().registerEventService(new BlacklistRemoveService(m_blacklistView, uuid));
 			
-			Service service = new TestBlacklistRemoveService(m_blacklistView, uuid);
+			Service service = new BlacklistRemoveService(m_blacklistView, uuid);
 			ProviderMain.getProviderThread().registerEventService(service);
 
 			while(!service.isServiceEnded())

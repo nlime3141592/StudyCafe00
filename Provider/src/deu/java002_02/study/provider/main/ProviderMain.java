@@ -1,5 +1,9 @@
 package deu.java002_02.study.provider.main;
 
+import java.net.Socket;
+
+import deu.java002_02.study.ni.INetworkModule;
+import deu.java002_02.study.ni.NetworkModule;
 import deu.java002_02.study.provider.gui.SeatView;
 
 public class ProviderMain
@@ -8,10 +12,21 @@ public class ProviderMain
 
 	public static void main(String[] args)
 	{
-		s_m_pThread = new ProviderThread(null);
-		s_m_pThread.start();
+		try
+		{
+			Socket socket = new Socket("localhost", 25565);
+			INetworkModule netModule = new NetworkModule(socket);
+			netModule.writeByte(2);
+			
+			s_m_pThread = new ProviderThread(netModule);
+			s_m_pThread.start();
 
-		new SeatView("예약 현황판").showView();
+			new SeatView("예약 현황판").showView();
+		}
+		catch(Exception _e)
+		{
+			
+		}
 	}
 
 	public static ProviderThread getProviderThread()

@@ -20,7 +20,7 @@ public class SeatSelectProviderService extends Service implements INetworkServic
 	{
 		// NOTE: 정보 수신
 		int count = 0;
-		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
+		String[] lines = new String[1]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
 
 		while(count < lines.length)
 		{
