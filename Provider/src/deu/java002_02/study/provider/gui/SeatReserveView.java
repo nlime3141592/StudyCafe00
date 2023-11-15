@@ -2,17 +2,23 @@ package deu.java002_02.study.provider.gui;
 
 import java.awt.Insets;
 
+import deu.java002_02.study.provider.main.ProviderMain;
+import deu.java002_02.study.provider.service.ReserveCancelService;
+
 public class SeatReserveView extends View
 {
 	private int m_width;
 	private int m_height;
 
-	public SeatReserveView(String _title)
+	public SeatReserveView(int _seatNumber)
 	{
-		super(_title);
+		super(String.format("ÁÂ¼® ¹øÈ£ #%d", _seatNumber));
 
 		m_width = 480;
 		m_height = 640;
+		
+		ReserveCancelService service = new ReserveCancelService(this, 2);
+		ProviderMain.getProviderThread().registerEventService(service);
 	}
 
 	@Override

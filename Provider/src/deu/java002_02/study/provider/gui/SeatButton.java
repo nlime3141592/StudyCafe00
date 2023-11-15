@@ -65,7 +65,7 @@ public class SeatButton extends JButton implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		SeatReserveView view = new SeatReserveView(String.format("ÁÂ¼® ¹øÈ£ #%d", m_seatNumber));
+		SeatReserveView view = new SeatReserveView(m_seatNumber);
 		SeatSelectService service = new SeatSelectService(view, m_seatNumber);
 		ProviderMain.getProviderThread().registerEventService(service);
 		view.showView();
