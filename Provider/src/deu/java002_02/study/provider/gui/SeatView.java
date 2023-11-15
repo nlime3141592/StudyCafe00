@@ -47,6 +47,9 @@ public class SeatView extends View
 			{
 				// TODO: 운영 시간 설정 페이지를 여는 코드를 작성합니다.
 				TimetableView view = new TimetableView("독서실 운영 시간 설정");
+				view.getTimetableRow(0).setRun(true);
+				view.getTimetableRow(5).setOpentime(19, 30);
+				view.getTimetableRow(6).setClosetime(22, 45);
 				view.showView();
 			}
 		});
@@ -111,7 +114,7 @@ public class SeatView extends View
 		}
 
 		// NOTE: 공간 구조도 이미지를 가져옵니다.
-		ImageIcon spaceImage = new ImageIcon("src/deu/java002_02/study/provider/resource/Space640x352.png");
+		ImageIcon spaceImage = new ImageIcon("../resources/Space640x352.png");
 		m_width = spaceImage.getIconWidth();
 		m_height = spaceImage.getIconHeight();
 

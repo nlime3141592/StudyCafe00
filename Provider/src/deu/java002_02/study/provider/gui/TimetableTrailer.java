@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import deu.java002_02.study.provider.main.ProviderMain;
+import deu.java002_02.study.provider.service.TimetableUpdateService;
 
 public class TimetableTrailer extends JPanel
 {
@@ -33,7 +34,7 @@ public class TimetableTrailer extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// ProviderMain.getProviderThread().registerEventService(new TimetableUpdateService(this));
+				ProviderMain.getProviderThread().registerEventService(new TimetableUpdateService(m_view));
 				JOptionPane.showMessageDialog(null, "설정을 저장했습니다.");
 			}
 		});

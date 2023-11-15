@@ -17,12 +17,12 @@ public class BlacklistRemoveService extends Service implements INetworkService, 
 	{
 		// NOTE: 정보 수신
 		int count = 0;
-		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
+		String[] lines = new String[1]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
 
 		while(count < lines.length)
 		{
 			lines[count] = m_netModule.readLine();
-			
+
 			if(lines[count] == null)
 			{
 				m_netModule.writeLine(NetworkLiteral.ERROR);
@@ -33,7 +33,7 @@ public class BlacklistRemoveService extends Service implements INetworkService, 
 
 			++count;
 		}
-		
+
 		String uuid = lines[0];
 
 		// NOTE: 데이터베이스 서비스 진입

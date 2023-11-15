@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="deu.java002_02.study.tprovider.service.TService03"/>
-    <fullyQualifiedTypeName name="java.net.ServerSocket"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.server.ServerMain"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.server.command.MonitorCommand"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkModule"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.ConnectionModule"/>
-    <fullyQualifiedTypeName name="java.sql.SQLTimeoutException"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.main.ThreadState"/>
-    <fullyQualifiedTypeName name="java.awt.Font"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatButton"/>
-    <fullyQualifiedTypeName name="java.awt.Insets"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.JoinService"/>
-    <fullyQualifiedTypeName name="java.net.Socket"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.LoginService"/>
-    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
-    <fullyQualifiedTypeName name="java.util.Vector"/>
     <fullyQualifiedTypeName name="java.security.Provider.Service"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.JoinService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.LoginService"/>
     <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatView"/>
@@ -32,7 +16,6 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.main.StudyThread"/>
     <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArraySet"/>
     <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentLinkedQueue"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.IService"/>
     <fullyQualifiedTypeName name="java.time.LocalTime"/>
     <fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
@@ -44,9 +27,6 @@
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatTimerService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatSelectService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveCancelService"/>
@@ -57,7 +37,27 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.TimetableUpdateService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.data.Day"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
-    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.awt.Component"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveSelectService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatSelectCustomerService"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.BlacklistView"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.tconsole.service.BlacklistAddService"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="java.net.Socket"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.TimetableUpdateService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistAddService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistRemoveService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistSelectService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.main.ProviderMain"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.TimetableView"/>
 </qualifiedTypeNameHistroy>

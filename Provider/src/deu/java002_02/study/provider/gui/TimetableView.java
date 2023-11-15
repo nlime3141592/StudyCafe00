@@ -4,6 +4,9 @@ import java.awt.Insets;
 
 import javax.swing.JFrame;
 
+import deu.java002_02.study.provider.main.ProviderMain;
+import deu.java002_02.study.provider.service.TimetableSelectService;
+
 public class TimetableView extends View
 {
 	private final static String[] DAY_STRINGS = { "월", "화", "수", "목", "금", "토", "일" };
@@ -38,6 +41,9 @@ public class TimetableView extends View
 			m_rows[i].setLocation(0, 60 + 50 * i);
 			super.add(m_rows[i]);
 		}
+
+		TimetableSelectService service = new TimetableSelectService(this);
+		ProviderMain.getProviderThread().registerEventService(service);
 	}
 
 	@Override

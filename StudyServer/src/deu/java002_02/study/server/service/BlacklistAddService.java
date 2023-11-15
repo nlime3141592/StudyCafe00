@@ -1,5 +1,8 @@
 package deu.java002_02.study.server.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
@@ -17,7 +20,7 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 	{
 		// NOTE: 정보 수신
 		int count = 0;
-		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
+		String[] lines = new String[1]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
 
 		while(count < lines.length)
 		{
@@ -50,14 +53,33 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 			return false;
 		}
 
-		String sql = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
-		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
+		String sqlUpdate = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
+		boolean serviceSuccess = m_conModule.executeUpdate(sqlUpdate, uuid) > 0;
 
 		// NOTE: 서비스 결과 반환
 		if(serviceSuccess)
-			m_netModule.writeLine(NetworkLiteral.SUCCESS);
+		{
+			String sqlSelect = "SELECT nickname, bdate FROM userinfo WHERE uuid = ? ORDER BY uuid";
+			ResultSet rs = m_conModule.executeQuery(sqlSelect, uuid);
+			
+			try
+			{
+				rs.next();
+				m_netModule.writeLine(rs.getString(1));
+				m_netModule.writeLine(rs.getString(2));
+				m_netModule.writeLine(NetworkLiteral.SUCCESS);
+			}
+			catch (SQLException e)
+			{
+				m_netModule.writeLine(NetworkLiteral.EOF);
+				m_netModule.writeLine(NetworkLiteral.FAILURE);
+			}
+		}
 		else
+		{
+			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.FAILURE);
+		}
 
 		return serviceSuccess;
 	}

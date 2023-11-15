@@ -8,6 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import deu.java002_02.study.provider.main.ProviderMain;
+import deu.java002_02.study.provider.service.SeatSelectService;
+
 public class SeatButton extends JButton implements ActionListener
 {
 	private static int s_m_refCount = 0;
@@ -27,10 +30,10 @@ public class SeatButton extends JButton implements ActionListener
 	{
 		if(s_m_refCount == 0)
 		{
-			s_m_img0 = new ImageIcon("src/deu/java002_02/study/provider/resource/Seat0.png");
-			s_m_img1 = new ImageIcon("src/deu/java002_02/study/provider/resource/Seat1.png");
-			s_m_img2 = new ImageIcon("src/deu/java002_02/study/provider/resource/Seat2.png");
-			s_m_img3 = new ImageIcon("src/deu/java002_02/study/provider/resource/Seat3.png");
+			s_m_img0 = new ImageIcon("../resources/Seat0.png");
+			s_m_img1 = new ImageIcon("../resources/Seat1.png");
+			s_m_img2 = new ImageIcon("../resources/Seat2.png");
+			s_m_img3 = new ImageIcon("../resources/Seat3.png");
 
 			s_m_width = s_m_img0.getIconWidth();
 			s_m_height = s_m_img0.getIconHeight();
@@ -63,6 +66,8 @@ public class SeatButton extends JButton implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		SeatReserveView view = new SeatReserveView(String.format("ÁÂ¼® ¹øÈ£ #%d", m_seatNumber));
+		SeatSelectService service = new SeatSelectService(view, m_seatNumber);
+		ProviderMain.getProviderThread().registerEventService(service);
 		view.showView();
 	}
 

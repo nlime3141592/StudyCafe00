@@ -10,7 +10,7 @@ import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.ni.NetworkLiteral;
 
-public class SeatSelectService extends Service implements INetworkService, IConnectionService
+public class SeatSelectProviderService extends Service implements INetworkService, IConnectionService
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
@@ -20,7 +20,7 @@ public class SeatSelectService extends Service implements INetworkService, IConn
 	{
 		// NOTE: 정보 수신
 		int count = 0;
-		String[] lines = new String[2]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
+		String[] lines = new String[1]; // NOTE: EOF 문자열 수신을 포함하여 버퍼 용량을 1 늘려서 설정함.
 
 		while(count < lines.length)
 		{
@@ -51,7 +51,7 @@ public class SeatSelectService extends Service implements INetworkService, IConn
 		{
 			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
-			System.out.println("SeatSelectService: Cannot access DB.");
+			System.out.println("SeatSelectProviderService: Cannot access DB.");
 			return false;
 		}
 
