@@ -59,7 +59,10 @@ public class LoginService extends Service implements INetworkService, IConnectio
 		else
 		{
 			m_netModule.writeLine(NetworkLiteral.SUCCESS);
-			m_netModule.writeLine(Integer.toString(getUuidById(id)));
+			int uuid = getUuidById(id);
+			String nickname = getNicknameByUuid(uuid);
+			m_netModule.writeLine(Integer.toString(uuid));
+			m_netModule.writeLine(nickname);
 			return true;
 		}
 	}
@@ -135,6 +138,21 @@ public class LoginService extends Service implements INetworkService, IConnectio
 		catch (SQLException e)
 		{
 			return 0;
+		}
+	}
+	
+	private String getNicknameByUuid(int _uuid)
+	{
+		try
+		{
+			ResultSet rs = m_conModule.executeQuery("SELECT (nickname) FROM userinfo, account WHERE userinfo.uuid = account.uuid AND userinfo.uuid = ?", _uuid);
+			rs.next();
+			String nickname = rs.getString(1);
+			return nickname;
+		}
+		catch (SQLException e)
+		{
+			return null;
 		}
 	}
 }

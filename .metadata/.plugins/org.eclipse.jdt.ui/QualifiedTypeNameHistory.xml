@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.JoinService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.server.service.LoginService"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.security.Provider.Service"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.JoinService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.LoginService"/>
     <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatView"/>
     <fullyQualifiedTypeName name="javax.swing.JMenuBar"/>
     <fullyQualifiedTypeName name="javax.swing.JMenuItem"/>
     <fullyQualifiedTypeName name="javax.swing.JMenu"/>
@@ -46,18 +43,21 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.BlacklistView"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.tconsole.service.BlacklistAddService"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.net.Socket"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.TimetableUpdateService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistAddService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistRemoveService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistSelectService"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.provider.main.ProviderMain"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.TimetableView"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatReserveView"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatView"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.ReserveCancelService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.main.ProviderMain"/>
 </qualifiedTypeNameHistroy>
