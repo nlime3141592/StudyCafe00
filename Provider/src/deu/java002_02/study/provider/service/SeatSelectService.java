@@ -1,4 +1,5 @@
 package deu.java002_02.study.provider.service;
+
 import java.util.Vector;
 import deu.java002_02.study.ni.INetworkModule; 
 import deu.java002_02.study.ni.INetworkService;
@@ -10,32 +11,36 @@ public class SeatSelectService extends ProviderService implements INetworkServic
     private SeatReserveView seatReserveView;
     private int seatNumber;
     private INetworkModule m_netModule;
-    
-    public SeatSelectService(SeatReserveView  seatReserveView, int seatNumber) {
+
+    public SeatSelectService(SeatReserveView seatReserveView, int seatNumber)
+    {
         this.seatReserveView = seatReserveView;
         this.seatNumber = seatNumber;
     }
+
     @Override
     public boolean tryExecuteService()
     {
     	m_netModule.writeLine("SEAT_SELECT_SERVICE");
     	m_netModule.writeLine(Integer.toString(seatNumber));
 
-    	
     	Vector<String> lines = new Vector<String>();
-    	
+
     	while(true)
     	{
     		String line = m_netModule.readLine();
+
     		if(line == null)
     			return false;
     		else if(line.equals(NetworkLiteral.EOF))
     			break;
+
     		lines.add(line);
     	}
-    	
+
         String response = m_netModule.readLine();
         System.out.println(response);
+
         switch (response) 
         {
         case NetworkLiteral.SUCCESS: // “<SUCCESS>“
@@ -47,27 +52,21 @@ public class SeatSelectService extends ProviderService implements INetworkServic
     	        String nickname = lines.get(i + 2);
     	        String beginTime = lines.get(i + 3);
     	        String endTime = lines.get(i + 4);
-            // SeatReserveView 클래스의 addRow 함수 호출
-            seatReserveView.addRow(reserveId, nickname, beginTime, endTime);
-        	}
-        	 return true;
-            case NetworkLiteral.FAILURE: // “<FAILURE>“
-                return true;
-                
-            default:
-                return false;
-        }
-   	 
-    }
-        @Override
-        public void bindNetworkModule(INetworkModule _netModule)
-        {
-        	m_netModule = _netModule;
-        }
-    }
-    
-    
-   
 
-    
-   
+    	        // SeatReserveView 클래스의 addRow 함수 호출
+    	        seatReserveView.addRow(reserveId, uuid, nickname, beginTime, endTime);
+        	}
+        	return true;
+        case NetworkLiteral.FAILURE: // “<FAILURE>“
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public void bindNetworkModule(INetworkModule _netModule)
+    {
+    	m_netModule = _netModule;
+    }
+}

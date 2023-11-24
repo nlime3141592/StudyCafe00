@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.sql.SQLException"/>
-    <fullyQualifiedTypeName name="java.security.Provider.Service"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.JoinService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.customer.service.LoginService"/>
     <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
     <fullyQualifiedTypeName name="javax.swing.JMenuBar"/>
     <fullyQualifiedTypeName name="javax.swing.JMenuItem"/>
     <fullyQualifiedTypeName name="javax.swing.JMenu"/>
     <fullyQualifiedTypeName name="java.awt.event.WindowListener"/>
-    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.StudyThread"/>
     <fullyQualifiedTypeName name="java.util.concurrent.CopyOnWriteArraySet"/>
     <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentLinkedQueue"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.main.IService"/>
     <fullyQualifiedTypeName name="java.time.LocalTime"/>
     <fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
-    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
-    <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
     <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
@@ -35,14 +29,11 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.data.Day"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="java.awt.Component"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveSelectService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatSelectCustomerService"/>
-    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.BlacklistView"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.tconsole.service.BlacklistAddService"/>
@@ -55,9 +46,18 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.BlacklistSelectService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.TimetableView"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatReserveView"/>
-    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkModule"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.SeatView"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.INetworkService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionService"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.main.Service"/>
+    <fullyQualifiedTypeName name="javax.swing.JTable"/>
+    <fullyQualifiedTypeName name="javax.swing.ListSelectionModel"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
+    <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.SeatSelectService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.service.ReserveCancelService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.main.ProviderMain"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>

@@ -2,6 +2,8 @@ package deu.java002_02.study.provider.main;
 
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.NetworkModule;
 import deu.java002_02.study.provider.gui.SeatView;
@@ -21,11 +23,12 @@ public class ProviderMain
 			s_m_pThread = new ProviderThread(netModule);
 			s_m_pThread.start();
 
-			new SeatView("예약 현황판").showView();
+			SeatView view = new SeatView("예약 현황판");
+			view.showView();
 		}
 		catch(Exception _e)
 		{
-			
+			JOptionPane.showMessageDialog(null, "서버에 연결할 수 없습니다.");
 		}
 	}
 
