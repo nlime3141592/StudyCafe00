@@ -21,12 +21,17 @@ import deu.java002_02.study.server.service.TimetableUpdateService;
 public final class ProviderThread extends StudyThread
 {
 	private INetworkModule m_netModule;
+	
+	// NOTE: 실시간 처리를 수행하는 서비스는 필드에 둡니다.
+	private SeatTimerService m_seatTimerService;
 
 	public ProviderThread(INetworkModule _netModule)
 	{
 		super();
 		
 		m_netModule = _netModule;
+		
+		m_seatTimerService = new SeatTimerService();
 	}
 
 	@Override
@@ -62,7 +67,7 @@ public final class ProviderThread extends StudyThread
 				if(header != null)
 				{
 					IService service = switchService(header);
-					
+
 					if(service != null)
 					{
 						if(service instanceof INetworkService)
@@ -71,9 +76,6 @@ public final class ProviderThread extends StudyThread
 							ServerMain.getDB().requestService((IConnectionService)service);
 
 						service.tryExecuteService();
-
-						if(service instanceof IConnectionService)
-							((IConnectionService)service).bindConnectionModule(null);
 					}
 				}
 			}
@@ -92,6 +94,8 @@ public final class ProviderThread extends StudyThread
 
 	private IService switchService(String _header)
 	{
+		// System.out.println("Switching Header (Provider) : " + _header);
+
 		switch(_header)
 		{
 		case "END_CONNECTION":
@@ -107,8 +111,6 @@ public final class ProviderThread extends StudyThread
 			return new ReadServerTimeService();
 
 		// NOTE: 독서실 운영자 측 서버 서비스
-		case "SEAT_TIMER_SERVICE":
-			return new SeatTimerService();
 		case "SEAT_SELECT_SERVICE":
 			return new SeatSelectProviderService();
 		case "RESERVE_CANCEL_SERVICE":
@@ -123,6 +125,8 @@ public final class ProviderThread extends StudyThread
 			return new TimetableSelectService();
 		case "TIMETABLE_UPDATE_SERVICE":
 			return new TimetableUpdateService();
+		case "SEAT_TIMER_SERVICE":
+			return m_seatTimerService;
 
 		default:
 			System.out.println("ProviderThread: Invalid header requested.");

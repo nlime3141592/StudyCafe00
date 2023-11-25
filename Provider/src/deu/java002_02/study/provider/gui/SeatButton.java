@@ -51,13 +51,13 @@ public class SeatButton extends JButton implements ActionListener
 		super.setContentAreaFilled(false);
 		super.setBorderPainted(false);
 
-		m_lbSummary = new JLabel(String.format("#%d", _seatNumber));
-		m_lbSummary.setSize(super.getWidth(), super.getHeight());
+		m_lbSummary = new JLabel("");
+		m_lbSummary.setSize(super.getWidth() * 2, super.getHeight());
 		m_lbSummary.setHorizontalAlignment(JLabel.CENTER);
 		m_lbSummary.setVerticalAlignment(JLabel.CENTER);
 		m_lbSummary.setForeground(Color.BLACK);
-
 		m_seatNumber = _seatNumber;
+		this.setLeftRunningTime(null);
 
 		super.addActionListener(this);
 	}
@@ -82,6 +82,21 @@ public class SeatButton extends JButton implements ActionListener
 			s_m_img1 = null;
 			s_m_img2 = null;
 			s_m_img3 = null;
+		}
+	}
+
+	public void setLeftRunningTime(String _leftTimeOrNull)
+	{
+		if(_leftTimeOrNull == null)
+			m_lbSummary.setText(String.format("#%d", m_seatNumber));
+		else
+		{
+			String[] hhmmss = _leftTimeOrNull.split(":");
+			
+			if(Integer.parseInt(hhmmss[0]) == 0)
+				m_lbSummary.setText(String.format("%s:%s", hhmmss[1], hhmmss[2]));
+			else
+				m_lbSummary.setText(_leftTimeOrNull);
 		}
 	}
 

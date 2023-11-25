@@ -12,10 +12,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import deu.java002_02.study.main.IService;
+import deu.java002_02.study.provider.gui.event.SeatViewWindowEvent;
 import deu.java002_02.study.provider.main.ProviderMain;
 
 public class SeatView extends View
 {
+	public static final int c_MAX_SEAT_COUNT = 35;
+
 	private int m_width;
 	private int m_height;
 	private SeatButton[] m_seatButtons;
@@ -33,6 +36,7 @@ public class SeatView extends View
 		super.setLayout(null);
 		super.setLocationRelativeTo(null);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.addWindowListener(new SeatViewWindowEvent(this));
 
 		// NOTE: 메뉴 바를 생성합니다.
 		m_menuBar = new JMenuBar();
@@ -66,7 +70,7 @@ public class SeatView extends View
 		super.setJMenuBar(m_menuBar);
 
 		// NOTE: 좌석 버튼을 생성합니다.
-		m_seatButtons = new SeatButton[35];
+		m_seatButtons = new SeatButton[SeatView.c_MAX_SEAT_COUNT];
 		m_seatButtons[0] = createSeatButton(1, 160, 48);
 		m_seatButtons[1] = createSeatButton(2, 160, 80);
 		m_seatButtons[2] = createSeatButton(3, 160, 112);
@@ -102,7 +106,7 @@ public class SeatView extends View
 		m_seatButtons[32] = createSeatButton(33, 544, 112);
 		m_seatButtons[33] = createSeatButton(34, 544, 144);
 		m_seatButtons[34] = createSeatButton(35, 544, 176);
-		m_seatLeftRunningTimes = new String[35];
+		m_seatLeftRunningTimes = new String[SeatView.c_MAX_SEAT_COUNT];
 
 		for(int i = 0; i < m_seatButtons.length; ++i)
 		{
@@ -155,17 +159,23 @@ public class SeatView extends View
 		super.setVisible(false);
 		super.setSize(0, 0);
 	}
-	
-	public void setSeatLeftRunningTime(int _seatId, String _leftTime)
+
+	public void setSeatLeftRunningTime(int _seatId, String _leftTimeOrNull)
 	{
-		m_seatLeftRunningTimes[_seatId] = _leftTime;
+		m_seatLeftRunningTimes[_seatId - 1] = _leftTimeOrNull;
+		m_seatButtons[_seatId - 1].setLeftRunningTime(_leftTimeOrNull);
+	}
+
+	public String getSeatLeftRunningTime(int _seatId)
+	{
+		return m_seatLeftRunningTimes[_seatId - 1];
 	}
 
 	private SeatButton createSeatButton(int _seatId, int _posX, int _posY)
 	{
 		SeatButton button = new SeatButton(_seatId);
 		button.setLocation(_posX, _posY);
-		button.getSummaryLabel().setLocation(_posX, _posY);
+		button.getSummaryLabel().setLocation(_posX - button.getWidth() / 2, _posY);
 		return button;
 	}
 }

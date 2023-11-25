@@ -6,13 +6,7 @@ import deu.java002_02.study.main.ThreadState;
 import deu.java002_02.study.ni.IConnectionService;
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
-import deu.java002_02.study.server.service.JoinService;
-import deu.java002_02.study.server.service.LoginService;
-import deu.java002_02.study.server.service.ReserveCancelService;
-import deu.java002_02.study.server.service.ReserveSelectService;
-import deu.java002_02.study.server.service.ReserveService;
-import deu.java002_02.study.server.service.SeatSelectCustomerService;
-import deu.java002_02.study.server.service.SeatTimerService;
+import deu.java002_02.study.server.service.*;
 
 public class CustomerThread extends StudyThread
 {
@@ -107,8 +101,14 @@ public class CustomerThread extends StudyThread
 			return new ReserveCancelService();
 		case "RESERVE_SELECT_SERVICE":
 			return new ReserveSelectService();
+		case "TIMETABLE_SELECT_SERVICE":
+			return new TimetableSelectCustomerService();
+		case "RESERVABLE_WEEKDAY_SELECT_SERVICE":
+			return new ReservableWeekdaySelectService();
 		case "SEAT_SELECT_SERVICE":
 			return new SeatSelectCustomerService();
+		case "RESERVED_HOUR_SELECT_SERVICE":
+			return new ReservedHourSelectService();
 
 		default:
 			System.out.println("CustomerThread: Invalid header requested.");

@@ -14,10 +14,16 @@ public class SeatTimerService extends Service implements INetworkService, IConne
 {
 	private INetworkModule m_netModule;
 	private IConnectionModule m_conModule;
+	private boolean m_executing;
 
 	@Override
 	public boolean tryExecuteService()
 	{
+		if(m_executing)
+			return false;
+
+		m_executing = true;
+
 		// NOTE: 데이터베이스 서비스 진입
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
@@ -30,12 +36,13 @@ public class SeatTimerService extends Service implements INetworkService, IConne
 			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
 			System.out.println("SeatTimerService: Cannot access DB.");
+			m_executing = false;
 			return false;
 		}
 
-		String sql = "SELECT seatid, TIMEDIFF(tend, current_timestamp) FROM reserves WHERE current_timestamp >= tbeg AND current_timestamp < tend ORDER BY seatid, tbeg";
+		String sql = "SELECT seatid, TIMEDIFF(tend, current_timestamp) FROM reserves WHERE current_timestamp >= tbeg AND current_timestamp < tend GROUP BY seatid";
 		ResultSet rs = m_conModule.executeQuery(sql);
-		
+
 		// NOTE: 서비스 결과 반환
 		try
 		{
@@ -56,12 +63,14 @@ public class SeatTimerService extends Service implements INetworkService, IConne
 			else
 				m_netModule.writeLine(NetworkLiteral.FAILURE);
 
+			m_executing = false;
 			return resultCount > 0;
 		}
 		catch(SQLException _sqlEx)
 		{
 			m_netModule.writeLine(NetworkLiteral.EOF);
 			m_netModule.writeLine(NetworkLiteral.ERROR);
+			m_executing = false;
 			return false;
 		}
 	}

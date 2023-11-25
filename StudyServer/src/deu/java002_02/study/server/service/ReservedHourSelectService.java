@@ -64,9 +64,7 @@ public class ReservedHourSelectService extends Service implements INetworkServic
 
 			while(rs.next())
 			{
-				for(int i = 0; i < 4; ++i)
-					m_netModule.writeLine(rs.getString(i + 1));
-				
+				m_netModule.writeLine(rs.getString(1));
 				++resultCount;
 			}
 

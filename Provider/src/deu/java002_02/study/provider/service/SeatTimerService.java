@@ -1,5 +1,7 @@
 package deu.java002_02.study.provider.service;
 
+import java.util.Vector;
+
 import deu.java002_02.study.ni.INetworkModule;
 import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.provider.gui.SeatView;
@@ -26,14 +28,19 @@ public class SeatTimerService extends ProviderService implements INetworkService
         // TODO: 서버 측 SeatTimerProviderService.java 파일 참조하여 알고리즘 수정 필요함.
         // Read: (좌석번호 문자열, 남은 시간 문자열) x N개
     	String seatInfo;
-        while (!(seatInfo = m_netModule.readLine()).equals("<EOF>"))
-        {
-            // parsing seatInfo and set GUI using seatView.setSeatLeftRunningTime(int, String)
-            String[] seatData = seatInfo.split(",");
-            int seatNumber = Integer.parseInt(seatData[0]);
-            String remainingTime = seatData[1];
-            seatView.setSeatLeftRunningTime(seatNumber, remainingTime);
-        }
+    	Vector<String> infos = new Vector<String>(70);
+    	
+    	while(true)
+    	{
+    		seatInfo = m_netModule.readLine();
+    		
+    		if(seatInfo == null)
+    			return false;
+    		else if(seatInfo.equals("<EOF>"))
+    			break;
+    		
+    		infos.add(seatInfo);
+    	}
 
         // Read: 통신 결과
         String result = m_netModule.readLine();
@@ -42,7 +49,22 @@ public class SeatTimerService extends ProviderService implements INetworkService
         // 통신 결과에 따라 처리
         switch(result)
         {
+        // parsing seatInfos and set GUI using seatView.setSeatLeftRunningTime(int, String)
         case "<SUCCESS>":
+        	int i = 0;
+        	int j = 0;
+        	while(i < SeatView.c_MAX_SEAT_COUNT && j < infos.size())
+        	{
+        		int seatNumber = Integer.parseInt(infos.get(j));
+
+        		while(++i < seatNumber)
+        			seatView.setSeatLeftRunningTime(i, null);
+
+        		String remainingTime = infos.get(j + 1);
+        		seatView.setSeatLeftRunningTime(i, remainingTime);
+        		j += 2;
+        	}
+        	return true;
         case "<FAILURE>":
         	return true;
         default:

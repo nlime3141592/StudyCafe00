@@ -1,6 +1,5 @@
 package deu.java002_02.study.provider.main;
 
-import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -12,7 +11,7 @@ import deu.java002_02.study.ni.INetworkService;
 
 public class ProviderThread extends StudyThread
 {
-	private final static int c_FIXED_SERVICE_TIME = 20; // NOTE: 20ms마다 실시간 서비스 처리를 수행합니다.
+	private final static int c_FIXED_SERVICE_TIME = 33; // NOTE: 20ms마다 실시간 서비스 처리를 수행합니다.
 
 	private INetworkModule m_netModule;
 	private ConcurrentLinkedQueue<IService> m_eventServices;

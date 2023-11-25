@@ -1,0 +1,2 @@
+@echo off
+cd .\Provider\bin && start javaw -classpath ".;..\..\NetworkInterface\bin;..\..\StudySystem\bin;" deu.java002_02.study.provider.main.ProviderMain
