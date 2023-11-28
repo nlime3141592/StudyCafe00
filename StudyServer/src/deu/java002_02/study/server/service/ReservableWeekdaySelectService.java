@@ -55,7 +55,7 @@ public class ReservableWeekdaySelectService extends Service implements INetworkS
 			return false;
 		}
 
-		String sql = "SELECT (service_enable) FROM service_on_air WHERE day = WEEKDAY(\"?\")";
+		String sql = "SELECT (service_enable) FROM service_on_air WHERE day = WEEKDAY(?)";
 		ResultSet rs = m_conModule.executeQuery(sql, date);
 
 		try
