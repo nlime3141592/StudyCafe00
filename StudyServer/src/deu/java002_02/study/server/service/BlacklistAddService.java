@@ -53,7 +53,7 @@ public class BlacklistAddService extends Service implements INetworkService, ICo
 			return false;
 		}
 
-		String sqlUpdate = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ?";
+		String sqlUpdate = "UPDATE userinfo SET blacked = 1, bdate = current_timestamp WHERE uuid = ? AND blacked = 0";
 		boolean serviceSuccess = m_conModule.executeUpdate(sqlUpdate, uuid) > 0;
 
 		// NOTE: 서비스 결과 반환

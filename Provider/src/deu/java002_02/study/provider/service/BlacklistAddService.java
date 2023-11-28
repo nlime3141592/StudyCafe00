@@ -39,14 +39,14 @@ public class BlacklistAddService extends ProviderService implements INetworkServ
 			    return true;
 			} else if ("<FAILURE>".equals(networkResult)) {
 				System.out.println("블랙리스트 추가 실패");
-				return true;
+				return false;
 			} else if("<ERROR>".equals(networkResult)) {
 				System.out.println("통신실패");
 				return false;	
 			}
 			return false;
 	    }
-		@Override
+	@Override
 	public void bindNetworkModule(INetworkModule _netModule) {
 		this.m_netModule = _netModule;
 	}

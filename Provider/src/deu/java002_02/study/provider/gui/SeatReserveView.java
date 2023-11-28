@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Insets;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import deu.java002_02.study.provider.main.ProviderMain;
@@ -33,6 +34,14 @@ public class SeatReserveView extends View
 		// TODO: 실제 예약 취소 기능을 수행하려면 이 코드를 해당 위치로 옮긴다.
 		ReserveCancelService service = new ReserveCancelService(this, 2);
 		ProviderMain.getProviderThread().registerEventService(service);
+
+		while(!service.isServiceEnded())
+			continue;
+
+		if(service.isExecutionSuccess())
+			JOptionPane.showMessageDialog(null, "예약을 취소했습니다.");
+		else
+			JOptionPane.showMessageDialog(null, "알 수 없는 오류 발생.");
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class ReserveCancelService extends Service implements INetworkService, IC
 			return false;
 		}
 
-		String sql = "DELETE FROM reserves WHERE res_id = ?";
+		String sql = "DELETE FROM reserves WHERE res_id = ? AND tbeg < CURRENT_TIMESTAMP";
 		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
 
 		// NOTE: 서비스 결과 반환

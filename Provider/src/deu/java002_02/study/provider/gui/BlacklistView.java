@@ -23,7 +23,7 @@ public class BlacklistView extends View
 	private JButton m_deleteButton;
 	private JButton m_addButton;
 	private JPanel m_buttonPanel;
-	
+
 	private BlacklistAddView m_addView;
 	private BlacklistRemoveView m_removeView;
 

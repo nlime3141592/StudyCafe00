@@ -50,7 +50,7 @@ public class BlacklistRemoveService extends Service implements INetworkService, 
 			return false;
 		}
 
-		String sql = "UPDATE userinfo SET blacked = 0, bdate = 0 WHERE uuid = ?";
+		String sql = "UPDATE userinfo SET blacked = 0, bdate = 0 WHERE uuid = ? AND blacked = 1";
 		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
 
 		// NOTE: 서비스 결과 반환

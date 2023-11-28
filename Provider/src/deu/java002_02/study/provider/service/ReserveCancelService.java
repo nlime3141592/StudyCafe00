@@ -35,7 +35,7 @@ public class ReserveCancelService extends ProviderService implements INetworkSer
 			seatReserveView.removeRow(reservationServiceId); // GUI에서 행 제거
 			return true;
 		case "<FAILURE>":
-			return true;
+			return false;
 		default:
 			return false;
 		}

@@ -32,7 +32,7 @@ public class BlacklistRemoveService extends ProviderService implements INetworkS
 		else if ("<FAILURE>".equals(networkResult))
 		{
 			System.out.println("블랙리스트 삭제 실패");
-			return true;
+			return false;
 		}
 		else if("<ERROR>".equals(networkResult))
 		{
