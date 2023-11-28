@@ -67,8 +67,10 @@ public class ReservableWeekdaySelectService extends Service implements INetworkS
 				m_netModule.writeLine(rs.getString(1));
 				++resultCount;
 			}
-
-			m_netModule.writeLine(NetworkLiteral.EOF);
+			else
+			{
+				m_netModule.writeLine("-1");
+			}
 
 			if(resultCount > 0)
 				m_netModule.writeLine(NetworkLiteral.SUCCESS);
