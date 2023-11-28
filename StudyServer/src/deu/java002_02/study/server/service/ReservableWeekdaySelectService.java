@@ -18,7 +18,7 @@ public class ReservableWeekdaySelectService extends Service implements INetworkS
 	@Override
 	public boolean tryExecuteService()
 	{
-		// NOTE: Á¤º¸ ¼ö½Å
+		// NOTE: ì •ë³´ ìˆ˜ì‹ 
 		int count = 0;
 		String[] lines = new String[1];
 
@@ -40,7 +40,7 @@ public class ReservableWeekdaySelectService extends Service implements INetworkS
 
 		String date = lines[0]; // NOTE: "YYYY-MM-DD"
 
-		// NOTE: µ¥ÀÌÅÍº£ÀÌ½º ¼­ºñ½º ÁøÀÔ
+		// NOTE: ë°ì´í„°ë² ì´ìŠ¤ ì„œë¹„ìŠ¤ ì§„ì…
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
 
@@ -63,7 +63,10 @@ public class ReservableWeekdaySelectService extends Service implements INetworkS
 			int resultCount = 0;
 
 			if(rs.next())
+			{
 				m_netModule.writeLine(rs.getString(1));
+				++resultCount;
+			}
 
 			m_netModule.writeLine(NetworkLiteral.EOF);
 
