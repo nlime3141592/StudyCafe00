@@ -82,6 +82,8 @@ public class CustomerThread extends StudyThread
 
 	private IService switchService(String _header)
 	{
+		System.out.println("[CustomerThread] Parsing Header - " + _header);
+
 		switch(_header)
 		{
 		case "END_CONNECTION":
@@ -111,8 +113,7 @@ public class CustomerThread extends StudyThread
 			return new ReservedHourSelectService();
 
 		default:
-			System.out.println("CustomerThread: Invalid header requested.");
-			System.out.println("  _header == " + _header);
+			System.out.println("[CustomerThread] Invalid header requested.");
 			return null;
 		}
 	}

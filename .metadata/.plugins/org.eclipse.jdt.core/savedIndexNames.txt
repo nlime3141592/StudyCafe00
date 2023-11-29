@@ -6,6 +6,5 @@ INDEX VERSION 1.131+C:\Programming\Java\StudyCafe00\.metadata\.plugins\org.eclip
 934572948.index
 2097113199.index
 658277221.index
-4158840916.index
 1865797976.index
 3621125286.index

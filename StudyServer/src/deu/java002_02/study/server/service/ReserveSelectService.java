@@ -55,7 +55,7 @@ public class ReserveSelectService extends Service implements INetworkService, IC
 			return false;
 		}
 
-		String sql = "SELECT res_id, seatid, tbeg, tend, resdate FROM reserves WHERE uuid = ? ORDER BY tbeg";
+		String sql = "SELECT res_id, seatid, tbeg, tend, resdate FROM reserves WHERE uuid = ? AND tbeg > CURRENT_TIMESTAMP ORDER BY tbeg";
 		ResultSet rs = m_conModule.executeQuery(sql, uuid);
 
 		// NOTE: 서비스 결과 반환

@@ -55,7 +55,7 @@ public class SeatSelectCustomerService extends Service implements INetworkServic
 			return false;
 		}
 
-		String sql = "SELECT tbeg, tend FROM reserves WHERE seatid = ? AND DATEDIFF(tbeg, current_timestamp) >= 0 ORDER BY tbeg";
+		String sql = "SELECT tbeg, tend FROM reserves WHERE seatid = ? AND DATEDIFF(tbeg, current_timestamp) >= -1 ORDER BY tbeg";
 		ResultSet rs = m_conModule.executeQuery(sql, seatid);
 
 		// NOTE: 서비스 결과 반환
