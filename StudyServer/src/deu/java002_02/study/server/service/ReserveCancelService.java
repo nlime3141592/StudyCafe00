@@ -15,9 +15,9 @@ public class ReserveCancelService extends Service implements INetworkService, IC
 	@Override
 	public boolean tryExecuteService()
 	{
-		// NOTE: Á¤º¸ ¼ö½Å
+		// NOTE: ì •ë³´ ìˆ˜ì‹ 
 		int count = 0;
-		String[] lines = new String[1]; // NOTE: EOF ¹®ÀÚ¿­ ¼ö½ÅÀ» Æ÷ÇÔÇÏ¿© ¹öÆÛ ¿ë·®À» 1 ´Ã·Á¼­ ¼³Á¤ÇÔ.
+		String[] lines = new String[1]; // NOTE: EOF ë¬¸ìì—´ ìˆ˜ì‹ ì„ í¬í•¨í•˜ì—¬ ë²„í¼ ìš©ëŸ‰ì„ 1 ëŠ˜ë ¤ì„œ ì„¤ì •í•¨.
 
 		while(count < lines.length)
 		{
@@ -36,7 +36,7 @@ public class ReserveCancelService extends Service implements INetworkService, IC
 
 		String uuid = lines[0];
 
-		// NOTE: µ¥ÀÌÅÍº£ÀÌ½º ¼­ºñ½º ÁøÀÔ
+		// NOTE: ë°ì´í„°ë² ì´ìŠ¤ ì„œë¹„ìŠ¤ ì§„ì…
 		long nowTime = System.nanoTime();
 		long endTime = nowTime + (long)(1e+9 * 1);
 
@@ -50,10 +50,10 @@ public class ReserveCancelService extends Service implements INetworkService, IC
 			return false;
 		}
 
-		String sql = "DELETE FROM reserves WHERE res_id = ? AND tbeg < CURRENT_TIMESTAMP";
+		String sql = "DELETE FROM reserves WHERE res_id = ? AND tbeg > CURRENT_TIMESTAMP";
 		boolean serviceSuccess = m_conModule.executeUpdate(sql, uuid) > 0;
 
-		// NOTE: ¼­ºñ½º °á°ú ¹İÈ¯
+		// NOTE: ì„œë¹„ìŠ¤ ê²°ê³¼ ë°˜í™˜
 		if(serviceSuccess)
 			m_netModule.writeLine(NetworkLiteral.SUCCESS);
 		else
