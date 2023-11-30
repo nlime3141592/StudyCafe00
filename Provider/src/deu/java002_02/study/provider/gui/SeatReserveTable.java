@@ -42,4 +42,13 @@ public class SeatReserveTable extends JTable
 			if(m_tableModel.getValueAt(i, 0).equals(_resid))
 				m_tableModel.removeRow(i);
 	}
+	public int getReservationNumber() {
+	    int selectedRow = super.getSelectedRow();
+	    if (selectedRow != -1) {
+	        String reservationNumberString = (String) m_tableModel.getValueAt(selectedRow, 0);
+	        return Integer.parseInt(reservationNumberString);
+	    } else {
+	        return -1;
+	    }
+	}
 }
