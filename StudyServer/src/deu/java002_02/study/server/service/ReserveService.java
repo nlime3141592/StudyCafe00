@@ -1,5 +1,8 @@
 package deu.java002_02.study.server.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import deu.java002_02.study.main.Service;
 import deu.java002_02.study.ni.IConnectionModule;
 import deu.java002_02.study.ni.IConnectionService;
@@ -53,8 +56,32 @@ public class ReserveService extends Service implements INetworkService, IConnect
 			return false;
 		}
 
-		String sql = "INSERT INTO reserves SET seatid = ?, uuid = ?, tbeg = ?, tend = ?, resdate = current_timestamp";
-		boolean serviceSuccess = m_conModule.executeUpdate(sql, seatid, uuid, beginServiceTime, endServiceTime) > 0;
+		try
+		{
+			String sql0 = "SELECT COUNT(*) FROM reserves WHERE seatid = ? AND tbeg = ? AND tend = ?";
+			ResultSet result = m_conModule.executeQuery(sql0, seatid, beginServiceTime, endServiceTime);
+			result.next();
+			boolean available = Integer.parseInt(result.getString(1)) == 0;
+			
+			if(!available)
+			{
+				m_netModule.writeLine(NetworkLiteral.FAILURE);
+				return false;
+			}
+		}
+		catch (NumberFormatException e)
+		{
+			// e.printStackTrace();
+			return false;
+		}
+		catch (SQLException e)
+		{
+			// e.printStackTrace();
+			return false;
+		}
+
+		String sql1 = "INSERT INTO reserves SET seatid = ?, uuid = ?, tbeg = ?, tend = ?, resdate = current_timestamp";
+		boolean serviceSuccess = m_conModule.executeUpdate(sql1, seatid, uuid, beginServiceTime, endServiceTime) > 0;
 
 		// NOTE: 서비스 결과 반환
 		if(serviceSuccess)

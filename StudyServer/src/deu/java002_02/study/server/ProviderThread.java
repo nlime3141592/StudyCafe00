@@ -9,9 +9,6 @@ import deu.java002_02.study.ni.INetworkService;
 import deu.java002_02.study.server.service.BlacklistAddService;
 import deu.java002_02.study.server.service.BlacklistRemoveService;
 import deu.java002_02.study.server.service.BlacklistSelectService;
-import deu.java002_02.study.server.service.ReadFileService;
-import deu.java002_02.study.server.service.ReadServerTimeService;
-import deu.java002_02.study.server.service.ReadUserDataService;
 import deu.java002_02.study.server.service.ReserveCancelService;
 import deu.java002_02.study.server.service.SeatSelectProviderService;
 import deu.java002_02.study.server.service.SeatTimerService;
@@ -101,14 +98,6 @@ public final class ProviderThread extends StudyThread
 		case "END_CONNECTION":
 			this.stop();
 			return null;
-
-		// NOTE: 테스트용 서비스
-		case "READ_FILE_SERVICE_TEST":
-			return new ReadFileService("C:/Programming/Java/StudyCafe/TestFiles/FileMonitorService.txt");
-		case "READ_USER_DATA_SERVICE":
-			return new ReadUserDataService();
-		case "READ_SERVER_TIME_SERVICE":
-			return new ReadServerTimeService();
 
 		// NOTE: 독서실 운영자 측 서버 서비스
 		case "SEAT_SELECT_SERVICE":

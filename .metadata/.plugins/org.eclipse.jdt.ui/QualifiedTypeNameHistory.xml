@@ -24,7 +24,6 @@
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.ReserveSelectService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.server.service.SeatSelectCustomerService"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.provider.gui.BlacklistView"/>
-    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.NetworkLiteral"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.tconsole.service.BlacklistAddService"/>
     <fullyQualifiedTypeName name="java.net.Socket"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="java.util.StringTokenizer"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="deu.java002_02.study.ni.IConnectionModule"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 </qualifiedTypeNameHistroy>

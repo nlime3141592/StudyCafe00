@@ -32,9 +32,11 @@ public class TimetableSelectCustomerService extends Service implements INetworkS
 			System.out.println("TimetableSelectCustomerService: Cannot access DB.");
 			return false;
 		}
+		
+		String date = m_netModule.readLine();
 
-		String sql = "SELECT (HOUR(tbeg) + (TRUNCATE(CEIL(MINUTE(tbeg) / 60), 0))), HOUR(tend) FROM service_on_air ORDER BY day";
-		ResultSet rs = m_conModule.executeQuery(sql);
+		String sql = "SELECT (HOUR(tbeg) + (TRUNCATE(CEIL(MINUTE(tbeg) / 60), 0))), HOUR(tend) FROM service_on_air WHERE day = WEEKDAY(?) ORDER BY day";
+		ResultSet rs = m_conModule.executeQuery(sql, date);
 		
 		try
 		{
@@ -50,7 +52,7 @@ public class TimetableSelectCustomerService extends Service implements INetworkS
 
 			m_netModule.writeLine(NetworkLiteral.EOF);
 			
-			if(resultCount == 7)
+			if(resultCount > 0)
 				m_netModule.writeLine(NetworkLiteral.SUCCESS);
 			else
 				m_netModule.writeLine(NetworkLiteral.FAILURE);
