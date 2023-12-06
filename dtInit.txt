@@ -1,0 +1,47 @@
+CREATE DATABASE studycaf;
+use studycaf;
+
+CREATE TABLE `account`(
+	`uuid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '사용자고유번호',
+	`id` VARCHAR(32) NOT NULL COMMENT '사용자 계정',
+	`pw` VARCHAR(32) NOT NULL COMMENT '사용자 비밀번호',
+	`ctype` INT(8) NOT NULL DEFAULT 0 COMMENT '클라이언트 유형',
+	`regdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() COMMENT '가입날짜',
+	 PRIMARY KEY (`uuid`),
+    UNIQUE KEY (`id`)
+);
+
+CREATE TABLE `userinfo`(
+	`uuid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '사용자 고유번호',
+	`nickname` VARCHAR(32) NOT NULL COMMENT '사용자 닉네임',
+	`blacked` TINYINT(1) DEFAULT 0 COMMENT '블랙리스트 등재 여부',
+	`bdate` DATETIME DEFAULT 0 COMMENT '블랙리스트에 등재된 날짜',
+    FOREIGN KEY (`uuid`) REFERENCES `account` (`uuid`),
+    PRIMARY KEY (`uuid`)
+);
+
+CREATE TABLE `reserves`(
+    `res_id` INT NOT NULL AUTO_INCREMENT COMMENT '예약번호',
+    `seatid` INT DEFAULT 0 COMMENT '좌석 번호',
+    `uuid` INT(11) NOT NULL COMMENT '사용자 고유번호',
+    `tbeg` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() COMMENT '사용 시작 시간',
+    `tend` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() COMMENT '사용 종료 시간',
+    `resdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() COMMENT '예약 시간',
+    FOREIGN KEY (`uuid`) REFERENCES `account` (`uuid`),
+    PRIMARY KEY (`res_id`)
+);
+
+CREATE TABLE `service_on_air`(
+	`day` INT DEFAULT 0 COMMENT '운영요일',
+	`service_enable` TINYINT(1) DEFAULT 0 COMMENT '요일 별 독서실 운영유무',
+	`tbeg` TIME COMMENT '독서실 운영 시작 시간',
+	`tend` TIME COMMENT '독서실 운영 종료 시간'
+);
+
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (0, 1, '09:00:00', '22:00:00');
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (1, 1, '09:00:00', '22:00:00');
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (2, 1, '09:00:00', '22:00:00');
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (3, 1, '09:00:00', '22:00:00');
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (4, 1, '09:00:00', '22:00:00');
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (5, 1, '09:00:00', '22:00:00');
+INSERT INTO service_on_air (day, service_enable, tbeg, tend) values (6, 1, '09:00:00', '22:00:00');
