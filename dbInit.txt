@@ -1,5 +1,5 @@
-CREATE DATABASE studycaf;
-use studycaf;
+CREATE DATABASE studycafe;
+use studycafe;
 
 CREATE TABLE `account`(
 	`uuid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '사용자고유번호',
